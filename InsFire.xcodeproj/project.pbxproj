@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		221613536FB773FB8F5FD23F /* Pods_InsFire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4DC4C99A80FC297457D5194 /* Pods_InsFire.framework */; };
+		D34A67D71F05FF23002873EC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D34A67D61F05FF23002873EC /* GoogleService-Info.plist */; };
 		D3A122771F05FBD10086E01C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122761F05FBD10086E01C /* AppDelegate.swift */; };
 		D3A122791F05FBD10086E01C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122781F05FBD10086E01C /* ViewController.swift */; };
 		D3A1227C1F05FBD10086E01C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3A1227A1F05FBD10086E01C /* Main.storyboard */; };
@@ -16,6 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F536738837D0ED735569CC5 /* Pods-InsFire.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InsFire.release.xcconfig"; path = "Pods/Target Support Files/Pods-InsFire/Pods-InsFire.release.xcconfig"; sourceTree = "<group>"; };
+		2F22214EC73F6DD4D1B17DC9 /* Pods-InsFire.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InsFire.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InsFire/Pods-InsFire.debug.xcconfig"; sourceTree = "<group>"; };
+		D34A67D61F05FF23002873EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D3A122731F05FBD10086E01C /* InsFire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InsFire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3A122761F05FBD10086E01C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3A122781F05FBD10086E01C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +29,7 @@
 		D3A122801F05FBD20086E01C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3A122821F05FBD20086E01C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3A122891F05FCA50086E01C /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		D4DC4C99A80FC297457D5194 /* Pods_InsFire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InsFire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +37,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				221613536FB773FB8F5FD23F /* Pods_InsFire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0055E19AD54515FEC41F5006 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2F22214EC73F6DD4D1B17DC9 /* Pods-InsFire.debug.xcconfig */,
+				1F536738837D0ED735569CC5 /* Pods-InsFire.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D3A1226A1F05FBD10086E01C = {
 			isa = PBXGroup;
 			children = (
 				D3A122751F05FBD10086E01C /* InsFire */,
 				D3A122741F05FBD10086E01C /* Products */,
+				0055E19AD54515FEC41F5006 /* Pods */,
+				E15A575705A81E1818D9A4EA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +80,7 @@
 				D3A1227A1F05FBD10086E01C /* Main.storyboard */,
 				D3A1227D1F05FBD20086E01C /* Assets.xcassets */,
 				D3A1227F1F05FBD20086E01C /* LaunchScreen.storyboard */,
+				D34A67D61F05FF23002873EC /* GoogleService-Info.plist */,
 				D3A122821F05FBD20086E01C /* Info.plist */,
 			);
 			path = InsFire;
@@ -75,6 +94,14 @@
 			name = Utilis;
 			sourceTree = "<group>";
 		};
+		E15A575705A81E1818D9A4EA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D4DC4C99A80FC297457D5194 /* Pods_InsFire.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -82,9 +109,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D3A122851F05FBD20086E01C /* Build configuration list for PBXNativeTarget "InsFire" */;
 			buildPhases = (
+				8AD22CCB93016246BAC5A1F7 /* [CP] Check Pods Manifest.lock */,
 				D3A1226F1F05FBD10086E01C /* Sources */,
 				D3A122701F05FBD10086E01C /* Frameworks */,
 				D3A122711F05FBD10086E01C /* Resources */,
+				21548181299C6D89268556D5 /* [CP] Embed Pods Frameworks */,
+				BF158CDDF3C613977DC630FC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -136,12 +166,61 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3A122811F05FBD20086E01C /* LaunchScreen.storyboard in Resources */,
+				D34A67D71F05FF23002873EC /* GoogleService-Info.plist in Resources */,
 				D3A1227E1F05FBD20086E01C /* Assets.xcassets in Resources */,
 				D3A1227C1F05FBD10086E01C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		21548181299C6D89268556D5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InsFire/Pods-InsFire-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8AD22CCB93016246BAC5A1F7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BF158CDDF3C613977DC630FC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InsFire/Pods-InsFire-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D3A1226F1F05FBD10086E01C /* Sources */ = {
@@ -273,6 +352,7 @@
 		};
 		D3A122861F05FBD20086E01C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F22214EC73F6DD4D1B17DC9 /* Pods-InsFire.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = P4H262LK5X;
@@ -286,6 +366,7 @@
 		};
 		D3A122871F05FBD20086E01C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F536738837D0ED735569CC5 /* Pods-InsFire.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = P4H262LK5X;
@@ -316,6 +397,7 @@
 				D3A122871F05FBD20086E01C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

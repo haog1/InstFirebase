@@ -1,0 +1,6 @@
+framework module Pods_InsFire {
+  umbrella header "Pods-InsFire-umbrella.h"
+
+  export *
+  module * { export * }
+}

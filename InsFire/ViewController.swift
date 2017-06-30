@@ -6,9 +6,8 @@
 //  Copyright © 2017 TG. All rights reserved.
 //
 
-
-
 import UIKit
+import Firebase
 
 class ViewController: UIViewController {
     
@@ -54,8 +53,20 @@ class ViewController: UIViewController {
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.setTitleColor(.white, for: .normal)
+        
+        button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+        
         return button
     }()
+    
+    func handleSignUp(){
+        
+        let email = "gaohaoqian@gmail.com"
+        let password = "hello"
+        
+        Auth.auth().createUser(withEmail: email, password: password, completion: <#T##AuthResultCallback?##AuthResultCallback?##(User?, Error?) -> Void#>)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
