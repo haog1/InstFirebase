@@ -9,13 +9,38 @@
 import UIKit
 import Firebase
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "plus_photo").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleUploadPhoto), for: .touchUpInside)
         return button
     }()
+    
+    func handleUploadPhoto() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
+            plusPhotoButton.setImage(editedImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+            plusPhotoButton.setImage(originalImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+        
+        plusPhotoButton.layer.cornerRadius = plusPhotoButton.frame.width/2
+        plusPhotoButton.layer.masksToBounds = true
+        plusPhotoButton.layer.borderColor = UIColor.black.cgColor
+        plusPhotoButton.layer.borderWidth = 3
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     let emailTextField: UITextField = {
         let tf = UITextField()
@@ -80,19 +105,51 @@ class ViewController: UIViewController {
         }
     }
     
+    /**
+     submitting sign-up information to firebase database, including username
+     password, email and profile picture
+     */
     func handleSignUp(){
         
         guard let email = emailTextField.text, email.characters.count > 0 else { return }
         guard let username = usernameTextField.text, username.characters.count > 0 else { return }
         guard let password = passwordTextField.text, password.characters.count > 0 else { return }
-
-        Auth.auth().createUser(withEmail: email, password: password) { (user: User?, error: Error?) in
+        
+        Auth.auth().createUser(withEmail: email, password: password) {
+            (user: User?, error: Error?) in
             if let err = error {
                 print("Failed to create user: ", err)
             }
             
             print("Successfully created user: ", user?.uid ?? "Empty...")
             
+            guard let image = self.plusPhotoButton.imageView?.image else { return }
+            guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
+            
+            // saving pictures to Firebase Storage
+            let filename = NSUUID().uuidString
+            Storage.storage().reference().child("profile_image").child(filename).putData(uploadData, metadata: nil, completion: {
+                (metada, err) in
+                if let err = err {
+                    print("failed to upload profile image: ", err)
+                }
+                
+                guard let profileImageUrl = metada?.downloadURL()?.absoluteString else { return }
+                
+                print("successfully upload profile image: ", profileImageUrl)
+                
+                // submitting to database
+                guard let uid = user?.uid else { return }
+                let dictionaryValues = ["Username": username,"ProfileImageUrl": profileImageUrl,"E-mail": email, "Password": password]
+                let values = [uid: dictionaryValues]
+                Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: {
+                    (err, ref) in
+                    if let err = err {
+                        print("falied: ", err)
+                    }
+                    print("Successful")
+                })
+            })
         }
     }
     
