@@ -1,16 +1,27 @@
 //
 //  MainTabBarController.swift
-//  InstagramFirebase
+//  InsFire
 //
-//  Created by Brian Voong on 3/22/17.
-//  Copyright © 2017 Lets Build That App. All rights reserved.
+//  Created by TG on 30/6/17.
+//  Copyright © 2017 TG. All rights reserved.
 //
 
 import UIKit
+import Firebase
 
 class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if Auth.auth().currentUser == nil {
+            DispatchQueue.main.async {
+                let logInController = LogInController()
+                let navController = UINavigationController(rootViewController: logInController)
+                
+                self.present(navController, animated: true, completion: nil)
+            }
+            return
+        }
         
         let layout = UICollectionViewFlowLayout()
         let userProfileController = UserProfileController(collectionViewLayout: layout)

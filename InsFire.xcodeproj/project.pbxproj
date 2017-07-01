@@ -9,8 +9,9 @@
 /* Begin PBXBuildFile section */
 		221613536FB773FB8F5FD23F /* Pods_InsFire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4DC4C99A80FC297457D5194 /* Pods_InsFire.framework */; };
 		D34A67D71F05FF23002873EC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D34A67D61F05FF23002873EC /* GoogleService-Info.plist */; };
+		D39319921F07447E00DD4312 /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39319911F07447E00DD4312 /* LogInController.swift */; };
 		D3A122771F05FBD10086E01C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122761F05FBD10086E01C /* AppDelegate.swift */; };
-		D3A122791F05FBD10086E01C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122781F05FBD10086E01C /* ViewController.swift */; };
+		D3A122791F05FBD10086E01C /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122781F05FBD10086E01C /* SignUpController.swift */; };
 		D3A1227C1F05FBD10086E01C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3A1227A1F05FBD10086E01C /* Main.storyboard */; };
 		D3A1227E1F05FBD20086E01C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3A1227D1F05FBD20086E01C /* Assets.xcassets */; };
 		D3A122811F05FBD20086E01C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3A1227F1F05FBD20086E01C /* LaunchScreen.storyboard */; };
@@ -24,9 +25,10 @@
 		1F536738837D0ED735569CC5 /* Pods-InsFire.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InsFire.release.xcconfig"; path = "Pods/Target Support Files/Pods-InsFire/Pods-InsFire.release.xcconfig"; sourceTree = "<group>"; };
 		2F22214EC73F6DD4D1B17DC9 /* Pods-InsFire.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InsFire.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InsFire/Pods-InsFire.debug.xcconfig"; sourceTree = "<group>"; };
 		D34A67D61F05FF23002873EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D39319911F07447E00DD4312 /* LogInController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInController.swift; sourceTree = "<group>"; };
 		D3A122731F05FBD10086E01C /* InsFire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InsFire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3A122761F05FBD10086E01C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D3A122781F05FBD10086E01C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D3A122781F05FBD10086E01C /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		D3A1227B1F05FBD10086E01C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D3A1227D1F05FBD20086E01C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3A122801F05FBD20086E01C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -59,6 +61,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D393198E1F07445900DD4312 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				D39319911F07447E00DD4312 /* LogInController.swift */,
+				D3A122781F05FBD10086E01C /* SignUpController.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		D3A1226A1F05FBD10086E01C = {
 			isa = PBXGroup;
 			children = (
@@ -80,11 +91,11 @@
 		D3A122751F05FBD10086E01C /* InsFire */ = {
 			isa = PBXGroup;
 			children = (
+				D393198E1F07445900DD4312 /* Login */,
 				D3BFF7521F06631300752AEE /* UserProfile */,
 				D3A122881F05FC980086E01C /* Utilis */,
 				D3A122761F05FBD10086E01C /* AppDelegate.swift */,
 				D3BFF74D1F065A1700752AEE /* MainTabBarController.swift */,
-				D3A122781F05FBD10086E01C /* ViewController.swift */,
 				D3A1227A1F05FBD10086E01C /* Main.storyboard */,
 				D3A1227D1F05FBD20086E01C /* Assets.xcassets */,
 				D3A1227F1F05FBD20086E01C /* LaunchScreen.storyboard */,
@@ -245,7 +256,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3A1228A1F05FCA50086E01C /* Extension.swift in Sources */,
-				D3A122791F05FBD10086E01C /* ViewController.swift in Sources */,
+				D3A122791F05FBD10086E01C /* SignUpController.swift in Sources */,
+				D39319921F07447E00DD4312 /* LogInController.swift in Sources */,
 				D3BFF74E1F065A1700752AEE /* MainTabBarController.swift in Sources */,
 				D3BFF7541F06632500752AEE /* UserProfileHeader.swift in Sources */,
 				D3BFF7511F065AFB00752AEE /* UserProfileController.swift in Sources */,

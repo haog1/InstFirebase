@@ -1,9 +1,9 @@
 //
 //  UserProfileController.swift
-//  InstagramFirebase
+//  InsFire
 //
-//  Created by Brian Voong on 3/22/17.
-//  Copyright © 2017 Lets Build That App. All rights reserved.
+//  Created by TG on 30/6/17.
+//  Copyright © 2017 TG. All rights reserved.
 //
 
 import UIKit
@@ -18,7 +18,8 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         
         collectionView?.backgroundColor = .white
         
-        navigationItem.title = Auth.auth().currentUser?.uid
+        // showing the actual id of the user
+        //navigationItem.title = Auth.auth().currentUser?.uid
         
         fetchUser()
         
@@ -28,7 +29,34 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         
         collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         
+        setupLogoutButton()
+        
     }
+    
+    fileprivate func setupLogoutButton(){
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleLogOut))
+    }
+    
+    func handleLogOut() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alertController.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (_) in
+
+            do {
+                
+                try Auth.auth().signOut()
+                print("logged out.")
+                
+            } catch let signOutErr {
+                print("Failed to log out:, ", signOutErr)
+            }
+        }))
+
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 7
@@ -39,7 +67,6 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         cell.backgroundColor = .purple
         return cell
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
@@ -59,9 +86,6 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         
         header.user = self.user
         
-        //not correct
-        //header.addSubview(UIImageView())
-        
         return header
     }
     
@@ -70,6 +94,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }
     
     var user: AppUser?
+
     fileprivate func fetchUser() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in

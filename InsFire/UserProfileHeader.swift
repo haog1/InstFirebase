@@ -1,9 +1,9 @@
 //
 //  UserProfileHeader.swift
-//  InstagramFirebase
+//  InsFire
 //
-//  Created by Brian Voong on 3/22/17.
-//  Copyright © 2017 Lets Build That App. All rights reserved.
+//  Created by TG on 30/6/17.
+//  Copyright © 2017 TG. All rights reserved.
 //
 
 import UIKit
@@ -112,6 +112,7 @@ class UserProfileHeader: UICollectionViewCell {
         super.init(frame: frame)
         
         addSubview(profileImageView)
+        
         profileImageView.anchor(top: topAnchor, left: self.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 80, height: 80)
         profileImageView.layer.cornerRadius = 80 / 2
         profileImageView.clipsToBounds = true

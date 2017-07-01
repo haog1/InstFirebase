@@ -1,15 +1,22 @@
 //
 //  ViewController.swift
-//  InstagramFirebase
+//  InsFire
 //
-//  Created by Brian Voong on 3/15/17.
-//  Copyright © 2017 Lets Build That App. All rights reserved.
+//  Created by TG on 30/6/17.
+//  Copyright © 2017 TG. All rights reserved.
 //
 
 import UIKit
 import Firebase
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    let loginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Already have an account? Log In ", for: .normal)
+        button.addTarget(self, action: #selector(handleShowLogin), for: .touchUpInside)
+        return button
+    }()
     
     let plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -17,6 +24,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         button.addTarget(self, action: #selector(handlePlusPhoto), for: .touchUpInside)
         return button
     }()
+    
+    func handleShowLogin() {
+        let loginController = LogInController()
+        navigationController?.pushViewController(loginController, animated: true)
+    }
     
     func handlePlusPhoto() {
         let imagePickerController = UIImagePickerController()
@@ -159,6 +171,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
+        
         view.addSubview(plusPhotoButton)
         
         plusPhotoButton.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
@@ -166,6 +180,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         plusPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         setupInputFields()
+        
+        view.addSubview(loginButton)
+        loginButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
     }
     
     fileprivate func setupInputFields() {
