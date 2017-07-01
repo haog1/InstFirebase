@@ -11,24 +11,12 @@ import Firebase
 
 class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    let loginButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Already have an account? Log In ", for: .normal)
-        button.addTarget(self, action: #selector(handleShowLogin), for: .touchUpInside)
-        return button
-    }()
-    
     let plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "plus_photo").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(handlePlusPhoto), for: .touchUpInside)
         return button
     }()
-    
-    func handleShowLogin() {
-        let loginController = LogInController()
-        navigationController?.pushViewController(loginController, animated: true)
-    }
     
     func handlePlusPhoto() {
         let imagePickerController = UIImagePickerController()
@@ -157,15 +145,27 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
                         print("Failed to save user info into db:", err)
                         return
                     }
-                    
                     print("Successfully saved user info to db")
-                    
                 })
-                
-                
             })
-            
         })
+    }
+    
+    let alreadyHaveAccountButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        let attributedTitle = NSMutableAttributedString(string: "Already have an account?  ", attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName:UIColor.lightGray])
+        
+        attributedTitle.append(NSAttributedString(string: "Log In", attributes: [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 14),NSForegroundColorAttributeName:UIColor.rgb(red: 17, green: 154, blue: 237)]))
+        
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        
+        button.addTarget(self, action: #selector(handleShowLogin), for: .touchUpInside)
+        return button
+    }()
+    
+    func handleShowLogin() {
+        _ = navigationController?.popViewController(animated: true)
     }
     
     override func viewDidLoad() {
@@ -181,8 +181,8 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         setupInputFields()
         
-        view.addSubview(loginButton)
-        loginButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        view.addSubview(alreadyHaveAccountButton)
+        alreadyHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
     }
     
     fileprivate func setupInputFields() {
