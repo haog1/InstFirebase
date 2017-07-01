@@ -119,7 +119,6 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
             print("Successfully created user:", user?.uid ?? "")
             
             guard let image = self.plusPhotoButton.imageView?.image else { return }
-            
             guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
             
             let filename = NSUUID().uuidString
@@ -132,7 +131,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
                 
                 guard let profileImageUrl = metadata?.downloadURL()?.absoluteString else { return }
                 
-                print("Successfully uploaded profile image:", profileImageUrl)
+                //print("Successfully uploaded profile image:", profileImageUrl)
                 
                 guard let uid = user?.uid else { return }
                 
@@ -146,6 +145,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
                         return
                     }
                     print("Successfully saved user info to db")
+                    self.dismiss(animated: true, completion: nil)
                 })
             })
         })

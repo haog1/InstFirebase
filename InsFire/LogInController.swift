@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 
 class LogInController: UIViewController {
@@ -32,7 +33,7 @@ class LogInController: UIViewController {
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
         
-        //tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         
         return tf
     }()
@@ -44,9 +45,22 @@ class LogInController: UIViewController {
         tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
-        //tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
     }()
+    
+    func handleTextInputChange() {
+        let isFormValid = emailTextField.text?.characters.count ?? 0 > 0 && passwordTextField.text?.characters.count ?? 0 > 0
+        
+        if isFormValid {
+            loginButton.isEnabled = true
+            loginButton.backgroundColor = UIColor.rgb(red: 17, green: 154, blue: 237)
+        } else {
+            loginButton.isEnabled = false
+            loginButton.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
+        }
+    }
+    
     
     let loginButton: UIButton = {
         let button = UIButton(type: .system)
@@ -57,13 +71,39 @@ class LogInController: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.setTitleColor(.white, for: .normal)
         
-        //button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         
         button.isEnabled = false
         
         return button
     }()
+
+    // function to hook to firebase to login
+    func handleLogin() {
+        
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (user, err) in
+            if let err = err{
+                print("Failed to Sign In: ", err)
+                return
+            }
+            
+            // if sign in check successfully: 
+            print("Successfully signed in: ", user?.uid ?? "")
+            
+            // reset when login
+            guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
+
+            mainTabBarController.setupViewController()
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }
+    }
     
+    // dont have account? sign up
     let dontHaveAccountButton: UIButton = {
         let button = UIButton(type: .system)
         
@@ -77,6 +117,7 @@ class LogInController: UIViewController {
         return button
     }()
     
+    // show sign up statement
     func handleShowSignUp() {
         let signupController = SignUpController()
         navigationController?.pushViewController(signupController, animated: true)
