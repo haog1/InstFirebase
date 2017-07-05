@@ -32,40 +32,48 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         setupLogoutButton()
         
         // fetching all posts of currentUser from Firebase
-        fetchPost()
-        
+//        fetchPost()
+        fetchOrderedPosts()
     }
     
     // fetching data from Firebase DB
     var posts = [Post]()
-    fileprivate func fetchPost() {
+    
+    
+    fileprivate func fetchOrderedPosts() {
         
         // gat current user unique ID
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
         // get data from DB by user's unique ID
         let ref = Database.database().reference().child("posts").child(uid)
         
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+        ref.queryOrdered(byChild: "creationDate").observe(.childAdded, with: { (snapshot) in
             
-            dictionaries.forEach({ (key,value) in
-                
-                guard let dictionary = value as? [String: Any] else{ return }
-                let post = Post(dictionary: dictionary)
-                self.posts.append(post)
-                
-            })
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
             
+            let post = Post(dictionary: dictionary)
+            self.posts.append(post)
             self.collectionView?.reloadData()
             
         }) { (err) in
-            print("Failed to fetch current user's posts: ", err)
+            print("Failed to fetch current users: ", err)
         }
         
-        
-        
     }
+    
+    
+//    fileprivate func fetchPost() {
+//        // gat current user unique ID
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+//        // get data from DB by user's unique ID
+//        let ref = Database.database().reference().child("posts").child(uid)
+//        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+//            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+//            dictionaries.forEach({ (key,value) in
+//                guard let dictionary = value as? [String: Any] else{ return }
+//                let post = Post(dictionary: dictionary)
+//                self.posts.append(post)})
+//            self.collectionView?.reloadData()}) { (err) in print("Failed to fetch current user's posts: ", err)}}
     
     fileprivate func setupLogoutButton(){
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleLogOut))

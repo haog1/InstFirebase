@@ -13,26 +13,16 @@ class UserProfilePhotoCell: UICollectionViewCell {
     
     var post: Post? {
         didSet{
+            
             /* getting all URLs of images to show on the user profile page */
             guard let imageUrl = post?.imageUrl else { return }
-            guard let url = URL(string: imageUrl) else { return }
-            
-            URLSession.shared.dataTask(with: url) { (data, response, err) in
-                if let err = err {
-                    print("Failed to fetch posts to show on user profile page: ", err)
-                }
-                guard let imageData = data else { return }
-                let photoImage = UIImage(data: imageData)
-                DispatchQueue.main.async {
-                    self.photoImageView.image = photoImage
-                }
-            }.resume()
-            
+            photoImageView.loadImage(urlString: imageUrl)
+
         }
     }
     
-    let photoImageView: UIImageView = {
-       let iv = UIImageView()
+    let photoImageView: CustomImageView = {
+       let iv = CustomImageView()
         iv.backgroundColor = .white
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true

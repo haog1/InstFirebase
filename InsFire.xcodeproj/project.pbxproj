@@ -14,6 +14,7 @@
 		D3913A761F0CC14900249AD8 /* SharePhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A751F0CC14900249AD8 /* SharePhotoController.swift */; };
 		D3913A791F0CFDC900249AD8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A781F0CFDC900249AD8 /* Post.swift */; };
 		D3913A7B1F0CFF7500249AD8 /* UserProfilePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A7A1F0CFF7500249AD8 /* UserProfilePhotoCell.swift */; };
+		D3913A7D1F0D05DA00249AD8 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A7C1F0D05DA00249AD8 /* CustomImageView.swift */; };
 		D39319921F07447E00DD4312 /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39319911F07447E00DD4312 /* LogInController.swift */; };
 		D3A122771F05FBD10086E01C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122761F05FBD10086E01C /* AppDelegate.swift */; };
 		D3A122791F05FBD10086E01C /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122781F05FBD10086E01C /* SignUpController.swift */; };
@@ -36,6 +37,7 @@
 		D3913A751F0CC14900249AD8 /* SharePhotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharePhotoController.swift; sourceTree = "<group>"; };
 		D3913A781F0CFDC900249AD8 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		D3913A7A1F0CFF7500249AD8 /* UserProfilePhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfilePhotoCell.swift; sourceTree = "<group>"; };
+		D3913A7C1F0D05DA00249AD8 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		D39319911F07447E00DD4312 /* LogInController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInController.swift; sourceTree = "<group>"; };
 		D3A122731F05FBD10086E01C /* InsFire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InsFire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3A122761F05FBD10086E01C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				D3A122891F05FCA50086E01C /* Extension.swift */,
+				D3913A7C1F0D05DA00249AD8 /* CustomImageView.swift */,
 			);
 			name = Utilis;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				D3913A761F0CC14900249AD8 /* SharePhotoController.swift in Sources */,
 				D3A1228A1F05FCA50086E01C /* Extension.swift in Sources */,
 				D3913A701F0C8E5600249AD8 /* PhotoSelectorCell.swift in Sources */,
+				D3913A7D1F0D05DA00249AD8 /* CustomImageView.swift in Sources */,
 				D3913A791F0CFDC900249AD8 /* Post.swift in Sources */,
 				D3A122791F05FBD10086E01C /* SignUpController.swift in Sources */,
 				D3913A7B1F0CFF7500249AD8 /* UserProfilePhotoCell.swift in Sources */,
