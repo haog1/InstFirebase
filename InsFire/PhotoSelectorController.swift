@@ -30,13 +30,16 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
         
     }
     
+    // fetch all photos from phone library
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         self.selectedImage = images[indexPath.item]
         self.collectionView?.reloadData()
+        
+        // scrolling to the top when an image is selected
+        let indexPath = IndexPath(item: 0, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
     }
-    
-    // fetch all photos from phone library
     
     var selectedImage: UIImage?
     var images = [UIImage]()
@@ -45,7 +48,7 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
     fileprivate func assetFetchOptions() -> PHFetchOptions {
         let fetchOptions = PHFetchOptions()
         
-        fetchOptions.fetchLimit = 10
+        //fetchOptions.fetchLimit = 100000
         let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
         fetchOptions.sortDescriptors = [sortDescriptor]
         
@@ -91,10 +94,15 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
         return CGSize(width: width, height: width)
     }
     
+    var header: PhotoSelectorHeader?
+    
+    
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! PhotoSelectorHeader
         
+        self.header = header
+
         header.photoImageView.image = selectedImage
         
         // give a better pixel photo
@@ -160,8 +168,17 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
         dismiss(animated: true, completion: nil)
     }
     
+    /*
+     This function handles the button "Next" when user has chosen a photo which he wants to publish
+     */
     func handleNext() {
-        print("Handling next")
+        // push current view controller to a new view controller
+        let sharePhotoController = SharePhotoController()
+        
+        // asign photo to share view
+        sharePhotoController.selectedImage = header?.photoImageView.image
+        
+        navigationController?.pushViewController(sharePhotoController, animated: true)
     }
     
 }
