@@ -10,6 +10,7 @@
 		221613536FB773FB8F5FD23F /* Pods_InsFire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4DC4C99A80FC297457D5194 /* Pods_InsFire.framework */; };
 		D34A67D71F05FF23002873EC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D34A67D61F05FF23002873EC /* GoogleService-Info.plist */; };
 		D3913A701F0C8E5600249AD8 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A6F1F0C8E5600249AD8 /* PhotoSelectorCell.swift */; };
+		D3913A721F0CAC6D00249AD8 /* PhotoSelectorHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A711F0CAC6D00249AD8 /* PhotoSelectorHeader.swift */; };
 		D39319921F07447E00DD4312 /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39319911F07447E00DD4312 /* LogInController.swift */; };
 		D3A122771F05FBD10086E01C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122761F05FBD10086E01C /* AppDelegate.swift */; };
 		D3A122791F05FBD10086E01C /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122781F05FBD10086E01C /* SignUpController.swift */; };
@@ -28,6 +29,7 @@
 		2F22214EC73F6DD4D1B17DC9 /* Pods-InsFire.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InsFire.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InsFire/Pods-InsFire.debug.xcconfig"; sourceTree = "<group>"; };
 		D34A67D61F05FF23002873EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D3913A6F1F0C8E5600249AD8 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
+		D3913A711F0CAC6D00249AD8 /* PhotoSelectorHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectorHeader.swift; sourceTree = "<group>"; };
 		D39319911F07447E00DD4312 /* LogInController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInController.swift; sourceTree = "<group>"; };
 		D3A122731F05FBD10086E01C /* InsFire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InsFire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3A122761F05FBD10086E01C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 			children = (
 				D3E712181F08DA450096FCE1 /* PhotoSelectorController.swift */,
 				D3913A6F1F0C8E5600249AD8 /* PhotoSelectorCell.swift */,
+				D3913A711F0CAC6D00249AD8 /* PhotoSelectorHeader.swift */,
 			);
 			name = AddPhoto;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				D3BFF7541F06632500752AEE /* UserProfileHeader.swift in Sources */,
 				D3BFF7511F065AFB00752AEE /* UserProfileController.swift in Sources */,
 				D3A122771F05FBD10086E01C /* AppDelegate.swift in Sources */,
+				D3913A721F0CAC6D00249AD8 /* PhotoSelectorHeader.swift in Sources */,
 				D3E712191F08DA450096FCE1 /* PhotoSelectorController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -104,6 +104,13 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         return button
     }()
     
+    
+    /*
+     this is the fucntion that actually handles sign up and show main screen
+     after signning up, which may request to reset UI each time after loggin
+     out and signing up a new user or logging in another user
+    */
+
     func handleSignUp() {
         guard let email = emailTextField.text, email.characters.count > 0 else { return }
         guard let username = usernameTextField.text, username.characters.count > 0 else { return }
@@ -145,6 +152,11 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
                         return
                     }
                     print("Successfully saved user info to db")
+                    
+                    // reset UI when new user signed up
+                    guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
+                    mainTabBarController.setupViewController()
+
                     self.dismiss(animated: true, completion: nil)
                 })
             })

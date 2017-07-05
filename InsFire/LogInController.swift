@@ -77,8 +77,13 @@ class LogInController: UIViewController {
         
         return button
     }()
+    
+    /*
+     this is the fucntion that actually handles sign up and show main screen
+     after signning up, which may request to reset UI each time after loggin
+     out and signing up a new user or logging in another user
+     */
 
-    // function to hook to firebase to login
     func handleLogin() {
         
         guard let email = emailTextField.text else { return }
@@ -93,9 +98,8 @@ class LogInController: UIViewController {
             // if sign in check successfully: 
             print("Successfully signed in: ", user?.uid ?? "")
             
-            // reset when login
+            // reset UI when anthoer user login
             guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
-
             mainTabBarController.setupViewController()
             
             self.dismiss(animated: true, completion: nil)
