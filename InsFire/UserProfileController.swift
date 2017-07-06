@@ -9,9 +9,24 @@
 import UIKit
 import Firebase
 
+struct AppUser {
+    let username: String
+    let profileImageUrl: String
+    
+    init(dictionary: [String: Any]) {
+        self.username = dictionary["Username"] as? String ?? ""
+        self.profileImageUrl = dictionary["ProfileImageUrl"]  as? String ?? ""
+    }
+}
+
+
 class UserProfileController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
+    // fetching data from Firebase DB
+    var posts = [Post]()
+    var user: AppUser?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,12 +47,8 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         setupLogoutButton()
         
         // fetching all posts of currentUser from Firebase
-//        fetchPost()
         fetchOrderedPosts()
     }
-    
-    // fetching data from Firebase DB
-    var posts = [Post]()
     
     
     fileprivate func fetchOrderedPosts() {
@@ -61,20 +72,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         
     }
     
-    
-//    fileprivate func fetchPost() {
-//        // gat current user unique ID
-//        guard let uid = Auth.auth().currentUser?.uid else { return }
-//        // get data from DB by user's unique ID
-//        let ref = Database.database().reference().child("posts").child(uid)
-//        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-//            guard let dictionaries = snapshot.value as? [String: Any] else { return }
-//            dictionaries.forEach({ (key,value) in
-//                guard let dictionary = value as? [String: Any] else{ return }
-//                let post = Post(dictionary: dictionary)
-//                self.posts.append(post)})
-//            self.collectionView?.reloadData()}) { (err) in print("Failed to fetch current user's posts: ", err)}}
-    
+
     fileprivate func setupLogoutButton(){
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleLogOut))
     }
@@ -142,8 +140,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         return CGSize(width: view.frame.width, height: 200)
     }
     
-    var user: AppUser?
-    
+
     fileprivate func fetchUser() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -161,21 +158,6 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         }
     }
 }
-
-
-
-
-struct AppUser {
-    let username: String
-    let profileImageUrl: String
-    
-    init(dictionary: [String: Any]) {
-        self.username = dictionary["Username"] as? String ?? ""
-        self.profileImageUrl = dictionary["ProfileImageUrl"]  as? String ?? ""
-    }
-}
-
-
 
 
 
