@@ -18,6 +18,7 @@
 		D3913A801F0DD6A200249AD8 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A7F1F0DD6A200249AD8 /* HomeController.swift */; };
 		D3913A821F0DD96B00249AD8 /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A811F0DD96B00249AD8 /* HomePostCell.swift */; };
 		D3913A841F0E201D00249AD8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A831F0E201D00249AD8 /* User.swift */; };
+		D3913A861F0F135B00249AD8 /* FirebaseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A851F0F135B00249AD8 /* FirebaseExtension.swift */; };
 		D39319921F07447E00DD4312 /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39319911F07447E00DD4312 /* LogInController.swift */; };
 		D3A122771F05FBD10086E01C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122761F05FBD10086E01C /* AppDelegate.swift */; };
 		D3A122791F05FBD10086E01C /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122781F05FBD10086E01C /* SignUpController.swift */; };
@@ -44,6 +45,7 @@
 		D3913A7F1F0DD6A200249AD8 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		D3913A811F0DD96B00249AD8 /* HomePostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePostCell.swift; sourceTree = "<group>"; };
 		D3913A831F0E201D00249AD8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D3913A851F0F135B00249AD8 /* FirebaseExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseExtension.swift; sourceTree = "<group>"; };
 		D39319911F07447E00DD4312 /* LogInController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInController.swift; sourceTree = "<group>"; };
 		D3A122731F05FBD10086E01C /* InsFire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InsFire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3A122761F05FBD10086E01C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			children = (
 				D3A122891F05FCA50086E01C /* Extension.swift */,
 				D3913A7C1F0D05DA00249AD8 /* CustomImageView.swift */,
+				D3913A851F0F135B00249AD8 /* FirebaseExtension.swift */,
 			);
 			name = Utilis;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				D3913A821F0DD96B00249AD8 /* HomePostCell.swift in Sources */,
 				D3913A721F0CAC6D00249AD8 /* PhotoSelectorHeader.swift in Sources */,
 				D3E712191F08DA450096FCE1 /* PhotoSelectorController.swift in Sources */,
+				D3913A861F0F135B00249AD8 /* FirebaseExtension.swift in Sources */,
 				D3913A801F0DD6A200249AD8 /* HomeController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

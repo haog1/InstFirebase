@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 
+
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
@@ -60,37 +61,37 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         // gat current user unique ID
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        // fetching username
-        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            guard let userDict = snapshot.value as? [String: Any] else { return }
-            
-            let user = AppUser(dictionary: userDict)
-            // get data from DB by user's unique ID
-            
-            let ref = Database.database().reference().child("posts").child(uid)
-            
-            ref.observeSingleEvent(of: .value, with: { (snapshot) in
-                guard let dictionaries = snapshot.value as? [String: Any] else { return }
-                
-                dictionaries.forEach({ (key,value) in
-                    guard let dictionary = value as? [String: Any] else { return }
-                    
-                    let post = Post(user: user, dictionary: dictionary)
-                    
-                    self.posts.append(post)
-                })
-                
-                self.collectionView?.reloadData()
-                
-            }) { (err) in
-                print("Failed to fetch current user's posts: ", err)
-            }
-            
-        }) { (err) in
-            print("Failed to fetch user's username for home feed:", err)
+        Database.fetchUserWithUID(uid: uid) { (user) in
+            self.fetchPostsWithUser(user: user)
         }
+        
     }
     
-    
+    // fetch posts from database
+    fileprivate func fetchPostsWithUser(user: AppUser) {
+        
+        let ref = Database.database().reference().child("posts").child(user.uid)
+        
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+            
+            dictionaries.forEach({ (key,value) in
+                guard let dictionary = value as? [String: Any] else { return }
+                
+                let post = Post(user: user, dictionary: dictionary)
+                
+                self.posts.append(post)
+            })
+            
+            self.collectionView?.reloadData()
+            
+        }) { (err) in
+            print("Failed to fetch current user's posts: ", err)
+        }
+    }
 }
+
+
+
+
+

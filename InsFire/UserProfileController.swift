@@ -65,7 +65,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         
     }
     
-
+    
     fileprivate func setupLogoutButton(){
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleLogOut))
     }
@@ -100,11 +100,11 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserProfilePhotoCell
-
+        
         cell.post = posts[indexPath.item]
-
+        
         return cell
     }
     
@@ -133,21 +133,17 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         return CGSize(width: view.frame.width, height: 200)
     }
     
-
+    
     fileprivate func fetchUser() {
+        
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            print(snapshot.value ?? "")
+        
+        Database.fetchUserWithUID(uid: uid) { (user) in
             
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            
-            self.user = AppUser(dictionary: dictionary)
+            self.user = user
             self.navigationItem.title = self.user?.username
             
             self.collectionView?.reloadData()
-            
-        }) { (err) in
-            print("Failed to fetch user:", err)
         }
     }
 }
