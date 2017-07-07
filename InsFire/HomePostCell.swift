@@ -7,15 +7,40 @@
 //
 
 import UIKit
+import Firebase
+
 
 class HomePostCell: UICollectionViewCell {
     
     var post: Post? {
         didSet {
             guard let postImageUrl = post?.imageUrl else { return }
+            
             photoImageView.loadImage(urlString: postImageUrl)
             
+            usernameLabel.text = post?.user.username
+            
+            guard let profileImageUrl = post?.user.profileImageUrl else { return }
+            userProfileImageView.loadImage(urlString: profileImageUrl)
+            
+            // setup captions for home feed
+            setupAttributedCpation()
         }
+    
+    }
+    
+    
+    fileprivate func setupAttributedCpation() {
+        
+        guard let post = self.post else { return }
+        
+        let attributedText = NSMutableAttributedString(string: post.user.username, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)])
+        attributedText.append(NSAttributedString(string: " \(post.caption)", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)]))
+        
+        attributedText.append(NSAttributedString(string: "\n\n", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 4)]))
+        
+        attributedText.append(NSAttributedString(string: "1 week ago", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.gray]))
+        self.captionLabel.attributedText = attributedText
     }
     
     /* 
@@ -26,7 +51,6 @@ class HomePostCell: UICollectionViewCell {
         let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.backgroundColor = .yellow
         return iv
     }()
     
@@ -84,15 +108,6 @@ class HomePostCell: UICollectionViewCell {
     
     let captionLabel: UILabel = {
         let label = UILabel()
-//        label.text = "Something just for now"
-        
-        let attributedText = NSMutableAttributedString(string: "Username", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)])
-        attributedText.append(NSAttributedString(string: " Something just for now..now..now..now..now..now..now..", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)]))
-        
-        attributedText.append(NSAttributedString(string: "\n\n", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 4)]))
-        
-        attributedText.append(NSAttributedString(string: "1 week ago", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.gray]))
-        label.attributedText = attributedText
         label.numberOfLines = 0
         return label
     }()

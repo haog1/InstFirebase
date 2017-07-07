@@ -13,7 +13,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     let cellId = "cellId"
     var posts = [Post]()
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +49,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomePostCell
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomePostCell
         cell.post = posts[indexPath.item]
         return cell
     }
@@ -59,25 +59,38 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         // gat current user unique ID
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        // get data from DB by user's unique ID
         
-        let ref = Database.database().reference().child("posts").child(uid)
-        
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+        // fetching username
+        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             
-            dictionaries.forEach({ (key,value) in
+            guard let userDict = snapshot.value as? [String: Any] else { return }
+            
+            let user = AppUser(dictionary: userDict)
+            // get data from DB by user's unique ID
+            
+            let ref = Database.database().reference().child("posts").child(uid)
+            
+            ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                guard let dictionaries = snapshot.value as? [String: Any] else { return }
                 
-                guard let dictionary = value as? [String: Any] else { return }
-                let post = Post(dictionary: dictionary)
-                self.posts.append(post)
-            })
-            
-            self.collectionView?.reloadData()}) {
-                (err) in
+                dictionaries.forEach({ (key,value) in
+                    guard let dictionary = value as? [String: Any] else { return }
+                    
+                    let post = Post(user: user, dictionary: dictionary)
+                    
+                    self.posts.append(post)
+                })
+                
+                self.collectionView?.reloadData()
+                
+            }) { (err) in
                 print("Failed to fetch current user's posts: ", err)
+            }
+            
+        }) { (err) in
+            print("Failed to fetch user's username for home feed:", err)
         }
     }
-
+    
     
 }

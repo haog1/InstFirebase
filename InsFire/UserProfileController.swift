@@ -9,16 +9,6 @@
 import UIKit
 import Firebase
 
-struct AppUser {
-    let username: String
-    let profileImageUrl: String
-    
-    init(dictionary: [String: Any]) {
-        self.username = dictionary["Username"] as? String ?? ""
-        self.profileImageUrl = dictionary["ProfileImageUrl"]  as? String ?? ""
-    }
-}
-
 
 class UserProfileController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -62,8 +52,11 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
             
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             
-            let post = Post(dictionary: dictionary)
-            self.posts.append(post)
+            guard let user = self.user else { return }
+            
+            let post = Post(user: user, dictionary: dictionary)
+            self.posts.insert(post,at: 0)
+            
             self.collectionView?.reloadData()
             
         }) { (err) in

@@ -9,10 +9,15 @@
 import Foundation
 
 struct Post {
-    let imageUrl: String
     
-    init(dictionary: [String: Any]) {
+    let user: AppUser
+    let imageUrl: String
+    let caption: String
+    
+    init(user: AppUser, dictionary: [String: Any]) {
+        self.user = user
         self.imageUrl = dictionary["imageUrl"] as? String ?? ""
+        self.caption = dictionary["caption"] as? String ?? ""
     }
     
 }
