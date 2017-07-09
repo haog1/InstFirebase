@@ -25,6 +25,7 @@ class SharePhotoController: UIViewController {
     
     override func viewDidLoad() {
 
+        self.hideKeyboardWhenTappedAround()
         view.backgroundColor = UIColor.rgb(red: 240, green: 240, blue: 240)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(handleShare))
     

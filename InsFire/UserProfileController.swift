@@ -16,7 +16,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     // fetching data from Firebase DB
     var posts = [Post]()
     var user: AppUser?
-    
+    var userId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         collectionView?.backgroundColor = .white
         
         // showing the actual id of the user
-        //navigationItem.title = Auth.auth().currentUser?.uid
+        navigationItem.title = Auth.auth().currentUser?.uid
         
         fetchUser()
         
@@ -35,16 +35,15 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         collectionView?.register(UserProfilePhotoCell.self, forCellWithReuseIdentifier: cellId)
         
         setupLogoutButton()
-        
-        // fetching all posts of currentUser from Firebase
-        fetchOrderedPosts()
     }
     
     
     fileprivate func fetchOrderedPosts() {
         
         // gat current user unique ID
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        guard let uid = self.user?.uid else { return }
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
         // get data from DB by user's unique ID
         let ref = Database.database().reference().child("posts").child(uid)
         
@@ -136,7 +135,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     fileprivate func fetchUser() {
         
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let uid = userId ?? Auth.auth().currentUser?.uid ?? ""
         
         Database.fetchUserWithUID(uid: uid) { (user) in
             
@@ -144,6 +143,8 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
             self.navigationItem.title = self.user?.username
             
             self.collectionView?.reloadData()
+            
+            self.fetchOrderedPosts()
         }
     }
 }

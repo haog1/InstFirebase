@@ -41,6 +41,8 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.hideKeyboardWhenTappedAround()
+        
         collectionView?.backgroundColor = .white
         
         navigationController?.navigationBar.addSubview(searchBar)
@@ -51,11 +53,31 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
         collectionView?.register(SearchCell.self, forCellWithReuseIdentifier: cellId)
         
         collectionView?.alwaysBounceVertical = true
+        collectionView?.keyboardDismissMode = .onDrag
         
         fetchUsers()
         
     }
  
+    // jump to Selected users' profile page
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        searchBar.isHidden = true
+        searchBar.resignFirstResponder()
+        
+        let userProfileController = UserProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(userProfileController, animated: true)
+        
+        let user = filteredUsers[indexPath.item]
+        userProfileController.userId = user.uid
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchBar.isHidden = false
+    }
+    
+    
     fileprivate func fetchUsers() {
         
         let ref = Database.database().reference().child("users")
@@ -64,6 +86,12 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
             
             dictionaries.forEach({ (key, value) in
+                
+                if key == Auth.auth().currentUser?.uid {
+                    print("Found self")
+                    return
+                }
+                
                 guard let userDict = value as? [String: Any] else { return }
                 let user = AppUser(uid: key, dictionary: userDict)
                 self.users.append(user)
