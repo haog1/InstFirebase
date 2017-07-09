@@ -9,17 +9,34 @@
 import UIKit
 import Firebase
 
-class SearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout{
+class SearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate{
     
-    let searchBar: UISearchBar = {
+    lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
         sb.placeholder = "Enter username"
-        
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230)
+        sb.delegate = self
         return sb
     }()
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText.isEmpty {
+            filteredUsers = users
+        } else {
+            
+            filteredUsers = self.users.filter { (user) -> Bool in
+                return user.username.lowercased().contains(searchText.lowercased())
+            }
+        }
+        self.collectionView?.reloadData()
+        
+    }
+    
+    
     let cellId = "cellId"
+    var filteredUsers = [AppUser]()
+    var users = [AppUser]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,15 +52,48 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
         
         collectionView?.alwaysBounceVertical = true
         
+        fetchUsers()
+        
     }
  
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+    fileprivate func fetchUsers() {
+        
+        let ref = Database.database().reference().child("users")
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+        
+            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+            
+            dictionaries.forEach({ (key, value) in
+                guard let userDict = value as? [String: Any] else { return }
+                let user = AppUser(uid: key, dictionary: userDict)
+                self.users.append(user)
+            })
+            
+            // sort all users in ascending order
+            self.users.sort {
+                $0.username.lowercased() < $1.username.lowercased()
+            }
+            
+            self.filteredUsers = self.users
+            self.collectionView?.reloadData()
+        
+        }) { (err) in
+            print("Failed to fetch users for searching: ", err)
+        }
+        
     }
     
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return filteredUsers.count
+    }
+    
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchCell
+        
+        cell.user = filteredUsers[indexPath.item]
+        
         return cell
     }
     
