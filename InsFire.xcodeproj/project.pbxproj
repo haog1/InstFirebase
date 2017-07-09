@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		221613536FB773FB8F5FD23F /* Pods_InsFire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4DC4C99A80FC297457D5194 /* Pods_InsFire.framework */; };
+		D316C33D1F10B78B00EC4507 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D316C33C1F10B78B00EC4507 /* SearchController.swift */; };
+		D3191FE61F12364400CF0613 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3191FE51F12364400CF0613 /* SearchCell.swift */; };
 		D34A67D71F05FF23002873EC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D34A67D61F05FF23002873EC /* GoogleService-Info.plist */; };
 		D3913A701F0C8E5600249AD8 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A6F1F0C8E5600249AD8 /* PhotoSelectorCell.swift */; };
 		D3913A721F0CAC6D00249AD8 /* PhotoSelectorHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A711F0CAC6D00249AD8 /* PhotoSelectorHeader.swift */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		1F536738837D0ED735569CC5 /* Pods-InsFire.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InsFire.release.xcconfig"; path = "Pods/Target Support Files/Pods-InsFire/Pods-InsFire.release.xcconfig"; sourceTree = "<group>"; };
 		2F22214EC73F6DD4D1B17DC9 /* Pods-InsFire.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InsFire.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InsFire/Pods-InsFire.debug.xcconfig"; sourceTree = "<group>"; };
+		D316C33C1F10B78B00EC4507 /* SearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
+		D3191FE51F12364400CF0613 /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		D34A67D61F05FF23002873EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D3913A6F1F0C8E5600249AD8 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
 		D3913A711F0CAC6D00249AD8 /* PhotoSelectorHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectorHeader.swift; sourceTree = "<group>"; };
@@ -81,6 +85,15 @@
 				1F536738837D0ED735569CC5 /* Pods-InsFire.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		D316C33B1F10B73300EC4507 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				D316C33C1F10B78B00EC4507 /* SearchController.swift */,
+				D3191FE51F12364400CF0613 /* SearchCell.swift */,
+			);
+			name = Search;
 			sourceTree = "<group>";
 		};
 		D3913A771F0CFDBB00249AD8 /* Models */ = {
@@ -131,6 +144,7 @@
 		D3A122751F05FBD10086E01C /* InsFire */ = {
 			isa = PBXGroup;
 			children = (
+				D316C33B1F10B73300EC4507 /* Search */,
 				D3913A7E1F0DD69000249AD8 /* Home */,
 				D3913A771F0CFDBB00249AD8 /* Models */,
 				D3E712171F08DA340096FCE1 /* AddPhoto */,
@@ -313,7 +327,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3913A761F0CC14900249AD8 /* SharePhotoController.swift in Sources */,
+				D3191FE61F12364400CF0613 /* SearchCell.swift in Sources */,
 				D3A1228A1F05FCA50086E01C /* Extension.swift in Sources */,
+				D316C33D1F10B78B00EC4507 /* SearchController.swift in Sources */,
 				D3913A701F0C8E5600249AD8 /* PhotoSelectorCell.swift in Sources */,
 				D3913A7D1F0D05DA00249AD8 /* CustomImageView.swift in Sources */,
 				D3913A791F0CFDC900249AD8 /* Post.swift in Sources */,
