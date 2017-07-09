@@ -24,7 +24,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         collectionView?.backgroundColor = .white
         
         // showing the actual id of the user
-        navigationItem.title = Auth.auth().currentUser?.uid
+//        navigationItem.title = Auth.auth().currentUser?.uid
         
         fetchUser()
         
