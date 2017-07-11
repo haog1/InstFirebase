@@ -13,6 +13,8 @@ import Firebase
 
 class SharePhotoController: UIViewController {
     
+    static let updateFeedNotificationName = NSNotification.Name(rawValue: "UpdateFeed")
+    
     var selectedImage: UIImage? {
         didSet{
             self.imageView.image = selectedImage
@@ -96,7 +98,6 @@ class SharePhotoController: UIViewController {
         }
     }
     
-    
     // a function that saves posting image and text into DB
     fileprivate func saveToDatabaseWithImageUrl(imageUrl: String) {
         
@@ -123,6 +124,9 @@ class SharePhotoController: UIViewController {
             // Sharing window dismiss once all data saved into DB and storage
             // which the userpofile page should show up
             self.dismiss(animated: true, completion: nil)
+            
+            // handle refresh, posting a signal to homeControlelr
+            NotificationCenter.default.post(name: SharePhotoController.updateFeedNotificationName, object: nil)
             
         }
     }

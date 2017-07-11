@@ -39,7 +39,10 @@ class HomePostCell: UICollectionViewCell {
         
         attributedText.append(NSAttributedString(string: "\n\n", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 4)]))
         
-        attributedText.append(NSAttributedString(string: "1 week ago", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.gray]))
+        // set up posts time
+        let timeAgoDisplay = post.creationDate.timeAgoDisplay()
+        
+        attributedText.append(NSAttributedString(string: timeAgoDisplay, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.gray]))
         self.captionLabel.attributedText = attributedText
     }
     
@@ -80,6 +83,7 @@ class HomePostCell: UICollectionViewCell {
     /* buttons below than the iamge */
     let likeButton: UIButton = {
         let button = UIButton(type: .system)
+        //button.backgroundColor = .yellow
         button.setImage(#imageLiteral(resourceName: "like_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
         
         return button
@@ -108,6 +112,7 @@ class HomePostCell: UICollectionViewCell {
     
     let captionLabel: UILabel = {
         let label = UILabel()
+        //label.backgroundColor = .red
         label.numberOfLines = 0
         return label
     }()
@@ -145,6 +150,7 @@ class HomePostCell: UICollectionViewCell {
     // set up buttons below the image
     fileprivate func setupActionButtons() {
         let stackView = UIStackView(arrangedSubviews: [likeButton, commentButton, sendMessageButton])
+        //stackView.backgroundColor = .red
         stackView.distribution = .fillEqually
         addSubview(stackView)
         stackView.anchor(top: photoImageView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 120, height: 50)
