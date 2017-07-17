@@ -11,10 +11,14 @@ import Firebase
 
 class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    
+    // sign up photo slot
     let plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "plus_photo").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(handlePlusPhoto), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+
         return button
     }()
     
@@ -31,8 +35,9 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
             plusPhotoButton.setImage(editedImage.withRenderingMode(.alwaysOriginal), for: .normal)
+            handleTextInputChange()
         } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
-            plusPhotoButton.setImage(originalImage.withRenderingMode(.alwaysOriginal), for: .normal)
+            plusPhotoButton.setImage(originalImage, for: .normal)
         }
         
         plusPhotoButton.layer.cornerRadius = plusPhotoButton.frame.width/2
@@ -56,7 +61,11 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     }()
     
     func handleTextInputChange() {
-        let isFormValid = emailTextField.text?.characters.count ?? 0 > 0 && usernameTextField.text?.characters.count ?? 0 > 0 && passwordTextField.text?.characters.count ?? 0 > 0
+        
+        let isFormValid = usernameTextField.text?.characters.count ?? 0 > 0
+            && !areEqualImages(img1: #imageLiteral(resourceName: "plus_photo"), img2: plusPhotoButton.currentImage!)
+            && isValidEmail(testStr: emailTextField.text!)
+            && isPasswordValid(passwordTextField.text!)
         
         if isFormValid {
             signUpButton.isEnabled = true
@@ -79,7 +88,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     let passwordTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Password"
+        tf.placeholder = "Password: 8 digits, special, cap, lower, nums"
         tf.isSecureTextEntry = true
         tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
         tf.borderStyle = .roundedRect
@@ -208,7 +217,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         stackView.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 200)
     }
-    
+
 }
 
 

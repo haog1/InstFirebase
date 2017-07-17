@@ -34,8 +34,16 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         setupNavigationItems()
         fetchAllPosts()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        tap.numberOfTapsRequired = 2
+        view.addGestureRecognizer(tap)
+        
     }
     
+    func handleTap() {
+        print("123...")
+    }
     
     func handleUpdateFeed() {
         handleRefresh()
@@ -80,7 +88,17 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func setupNavigationItems() {
         navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
-        // get posts showed on home feed
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "camera3").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleCamera))
+    }
+    
+    
+    // show camera shooting view
+    func handleCamera() {
+        
+        let cameraController = CameraController() // construct an Camera-shooting object from custom class
+  
+        present(cameraController, animated: true, completion: nil) // show it when the icon is pressed
     }
     
     

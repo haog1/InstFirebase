@@ -28,14 +28,12 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.delegate = self
-        
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.async {
                 let logInController = LogInController()
                 let navController = UINavigationController(rootViewController: logInController)
-                
                 self.present(navController, animated: true, completion: nil)
             }
             return
@@ -44,13 +42,14 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         setupViewController()
 
     }
+
     
     // this function set up five tab bar items
     func setupViewController() {
         
         // home controller
         let homeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "home_unselected"), selectedImage: #imageLiteral(resourceName: "home_selected"), rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
-        
+
         // search controller
         let searchNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "search_unselected"), selectedImage: #imageLiteral(resourceName: "search_selected"), rootViewController: SearchController(collectionViewLayout: UICollectionViewFlowLayout()))
         // take photo and upload controller
@@ -88,5 +87,4 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         navController.tabBarItem.selectedImage = selectedImage.withRenderingMode(.alwaysOriginal)
         return navController
     }
-    
 }

@@ -13,10 +13,13 @@ extension UIColor {
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
     }
     
-    //    func someRandomeMethod() {
-    //
-    //    }
+    static func activeColor() -> UIColor {
+        return UIColor.rgb(red: 17, green: 154, blue: 237)
+    }
     
+    static func inActiveColor() -> UIColor {
+        return UIColor.rgb(red: 149, green: 204, blue: 244)
+    }
 }
 
 
@@ -49,7 +52,6 @@ extension UIView {
             heightAnchor.constraint(equalToConstant: height).isActive = true
         }
     }
-    
 }
 
 extension UIViewController {
@@ -63,6 +65,36 @@ extension UIViewController {
     func dismisskeyboard() {
         view.endEditing(true)
     }
+    
+    func isValidEmail(testStr:String) -> Bool {
+        // print("validate calendar: \(testStr)")
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        
+        return emailTest.evaluate(with: testStr)
+    }
+    
+    func isPasswordValid(_ password : String) -> Bool{
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
+        return passwordTest.evaluate(with: password)
+    }
+    
+    func isPasswordValid1(_ password : String) -> Bool{
+        //let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
+        //return passwordTest.evaluate(with: password)
+        return true
+    }
+    
+    func areEqualImages(img1: UIImage, img2: UIImage) -> Bool {
+        
+        guard let data1 = UIImagePNGRepresentation(img1) else { return false }
+        guard let data2 = UIImagePNGRepresentation(img2) else { return false }
+        
+        return data1 == data2
+    }
+    
+
+    
 }
 
 
@@ -103,10 +135,6 @@ extension Date {
     }
         
 }
-
-
-
-
 
 
 

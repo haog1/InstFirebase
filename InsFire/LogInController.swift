@@ -50,9 +50,8 @@ class LogInController: UIViewController {
     }()
     
     func handleTextInputChange() {
-        let isFormValid = emailTextField.text?.characters.count ?? 0 > 0 && passwordTextField.text?.characters.count ?? 0 > 0
         
-        if isFormValid {
+        if isPasswordValid1(passwordTextField.text!) && isValidEmail(testStr: emailTextField.text!) {
             loginButton.isEnabled = true
             loginButton.backgroundColor = UIColor.rgb(red: 17, green: 154, blue: 237)
         } else {
@@ -108,6 +107,25 @@ class LogInController: UIViewController {
     }
     
     // dont have account? sign up
+    let forgotPasswordButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        let attributedTitle = NSMutableAttributedString(string: "forgot your password?  ", attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName:UIColor.lightGray])
+        
+        attributedTitle.append(NSAttributedString(string: "Reset Password", attributes: [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 14),NSForegroundColorAttributeName:UIColor.rgb(red: 17, green: 154, blue: 237)]))
+        
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        
+        button.addTarget(self, action: #selector(handleResetPassword), for: .touchUpInside)
+        return button
+    }()
+    
+    func handleResetPassword() {
+        let resetPasswordController = ResetPasswordController()
+        navigationController?.pushViewController(resetPasswordController, animated: true)
+    }
+    
+    // dont have account? sign up
     let dontHaveAccountButton: UIButton = {
         let button = UIButton(type: .system)
         
@@ -147,8 +165,12 @@ class LogInController: UIViewController {
         
         view.backgroundColor = .white
 
+        view.addSubview(forgotPasswordButton)
         view.addSubview(dontHaveAccountButton)
-        dontHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        
+        // set bottom options, reset password, sign up
+        forgotPasswordButton.anchor(top: nil, left: view.leftAnchor, bottom: dontHaveAccountButton.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 20)
+        dontHaveAccountButton.anchor(top: forgotPasswordButton.bottomAnchor, left: forgotPasswordButton.leftAnchor, bottom: view.bottomAnchor, right: forgotPasswordButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 20)
         
         setupInputFields()
     }
