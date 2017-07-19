@@ -56,14 +56,17 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
     }
     
     fileprivate func fetchPhotos() {
+        let allPhotos = PHAsset.fetchAssets(with: .image, options: self.assetFetchOptions())
         
         DispatchQueue.global(qos: .background).async {
-            let allPhotos = PHAsset.fetchAssets(with: .image, options: self.assetFetchOptions())
             allPhotos.enumerateObjects({ (asset, count, stop) in
-                print(asset)
+
                 let imageManageer = PHImageManager.default()
                 let targetSize = CGSize(width: 200, height: 200)
-                imageManageer.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: nil, resultHandler: { (image, info) in
+                let options = PHImageRequestOptions()
+                options.isSynchronous = true
+                
+                imageManageer.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options, resultHandler: { (image, info) in
                     
                     if let image = image {
                         self.images.append(image)
