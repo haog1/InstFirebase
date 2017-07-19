@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
+class CameraController: UIViewController, AVCapturePhotoCaptureDelegate, UIViewControllerTransitioningDelegate {
     
     
     let captureButton: UIButton = {
@@ -26,16 +26,43 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
         return button
     }()
     
+    let switchFrontCamera: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "front_camera").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleSwitchCamera), for: .touchUpInside)
+        return button
+    }()
+    
     func handleDismiss() {
         dismiss(animated: true, completion: nil)
     }
     
+    func handleSwitchCamera() {
+        print("Switch to front camera.")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // set up custom transition effect, from left to right fading in
+        transitioningDelegate = self
+        
         setupCaptureSession()
         setupCaptureButtons()
+    }
+    
+
+    // present camera
+    let  customAnimationPresenter = CustomAnimationPresenter()
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        return customAnimationPresenter
+    }
+    
+    // dismiss camera
+    let customAnimationDismisser = CustomAnimationDismisser()
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return customAnimationDismisser
     }
     
     //hide status bar
@@ -47,10 +74,12 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
     fileprivate func setupCaptureButtons() {
         view.addSubview(captureButton)
         view.addSubview(dismissButton)
+        view.addSubview(switchFrontCamera)
         
         captureButton.anchor(top: nil, left: nil, bottom: view.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 24, paddingRight: 0, width: 80, height: 80)
         captureButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         dismissButton.anchor(top: view.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 50, height: 50)
+        switchFrontCamera.anchor(top: nil, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 32, paddingRight: 18, width: 40, height: 40)
     
     }
 
