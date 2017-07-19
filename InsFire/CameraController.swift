@@ -38,6 +38,12 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
         setupCaptureButtons()
     }
     
+    //hide status bar
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+    
     fileprivate func setupCaptureButtons() {
         view.addSubview(captureButton)
         view.addSubview(dismissButton)
@@ -47,26 +53,45 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
         dismissButton.anchor(top: view.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 50, height: 50)
     
     }
-    
-    let output = AVCapturePhotoOutput()
 
-    
     func handleCapturePhoto() {
         
         let settings  = AVCapturePhotoSettings()
         
-        output.capturePhoto(with: settings, delegate: self)
+        guard let previewFormatType = settings.availablePreviewPhotoPixelFormatTypes.first else { return }
         
+        settings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewFormatType]
+        output.capturePhoto(with: settings, delegate: self)
+        //captureButton.isEnabled = false
+        captureButton.isHidden = true
     }
-
+    
+    // capture image
     func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
         
-        print("finish processing photo sample buffer")
+        let imageData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: photoSampleBuffer!, previewPhotoSampleBuffer: previewPhotoSampleBuffer!)
+
+        let previewImage = UIImage(data: imageData!)
+        
+        // render previewimage on another isolated View
+        let containerView = PreviewPhotoContainerView()
+        containerView.previewImageView.image = previewImage
+        
+        view.addSubview(containerView)
+        containerView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        captureButton.isHidden = false
+        
+//        let previewImaeView = UIImageView(image: previewImage)
+//        view.addSubview(previewImaeView)
+//        previewImaeView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+//        
+//        print("finish processing photo sample buffer")
         
     }
     
-    
-    
+
+    let output = AVCapturePhotoOutput()
+
     fileprivate func setupCaptureSession() {
 
         let captureSession = AVCaptureSession()

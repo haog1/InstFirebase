@@ -13,6 +13,10 @@
 		D33D53B51F174A3E00264292 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33D53B41F174A3E00264292 /* CameraController.swift */; };
 		D33D53B71F19D5CF00264292 /* ResetPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33D53B61F19D5CF00264292 /* ResetPasswordController.swift */; };
 		D34A67D71F05FF23002873EC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D34A67D61F05FF23002873EC /* GoogleService-Info.plist */; };
+		D35C95C91F1E445B002A9FAB /* UserProfileEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35C95C81F1E445B002A9FAB /* UserProfileEditController.swift */; };
+		D35C95CB1F1EF922002A9FAB /* PreviewPhotoContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35C95CA1F1EF922002A9FAB /* PreviewPhotoContainerView.swift */; };
+		D35C95D21F1F106B002A9FAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D35C95CF1F1F106B002A9FAB /* Main.storyboard */; };
+		D35C95D31F1F106B002A9FAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D35C95D11F1F106B002A9FAB /* LaunchScreen.storyboard */; };
 		D3913A701F0C8E5600249AD8 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A6F1F0C8E5600249AD8 /* PhotoSelectorCell.swift */; };
 		D3913A721F0CAC6D00249AD8 /* PhotoSelectorHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A711F0CAC6D00249AD8 /* PhotoSelectorHeader.swift */; };
 		D3913A761F0CC14900249AD8 /* SharePhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913A751F0CC14900249AD8 /* SharePhotoController.swift */; };
@@ -26,9 +30,7 @@
 		D39319921F07447E00DD4312 /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39319911F07447E00DD4312 /* LogInController.swift */; };
 		D3A122771F05FBD10086E01C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122761F05FBD10086E01C /* AppDelegate.swift */; };
 		D3A122791F05FBD10086E01C /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122781F05FBD10086E01C /* SignUpController.swift */; };
-		D3A1227C1F05FBD10086E01C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3A1227A1F05FBD10086E01C /* Main.storyboard */; };
 		D3A1227E1F05FBD20086E01C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3A1227D1F05FBD20086E01C /* Assets.xcassets */; };
-		D3A122811F05FBD20086E01C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3A1227F1F05FBD20086E01C /* LaunchScreen.storyboard */; };
 		D3A1228A1F05FCA50086E01C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A122891F05FCA50086E01C /* Extension.swift */; };
 		D3BFF74E1F065A1700752AEE /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BFF74D1F065A1700752AEE /* MainTabBarController.swift */; };
 		D3BFF7511F065AFB00752AEE /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BFF7501F065AFB00752AEE /* UserProfileController.swift */; };
@@ -44,6 +46,10 @@
 		D33D53B41F174A3E00264292 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		D33D53B61F19D5CF00264292 /* ResetPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordController.swift; sourceTree = "<group>"; };
 		D34A67D61F05FF23002873EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D35C95C81F1E445B002A9FAB /* UserProfileEditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileEditController.swift; sourceTree = "<group>"; };
+		D35C95CA1F1EF922002A9FAB /* PreviewPhotoContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewPhotoContainerView.swift; sourceTree = "<group>"; };
+		D35C95CE1F1F106B002A9FAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D35C95D01F1F106B002A9FAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3913A6F1F0C8E5600249AD8 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
 		D3913A711F0CAC6D00249AD8 /* PhotoSelectorHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectorHeader.swift; sourceTree = "<group>"; };
 		D3913A751F0CC14900249AD8 /* SharePhotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharePhotoController.swift; sourceTree = "<group>"; };
@@ -58,9 +64,7 @@
 		D3A122731F05FBD10086E01C /* InsFire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InsFire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3A122761F05FBD10086E01C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3A122781F05FBD10086E01C /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
-		D3A1227B1F05FBD10086E01C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D3A1227D1F05FBD20086E01C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D3A122801F05FBD20086E01C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3A122821F05FBD20086E01C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3A122891F05FCA50086E01C /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		D3BFF74D1F065A1700752AEE /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -104,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				D33D53B41F174A3E00264292 /* CameraController.swift */,
+				D35C95CA1F1EF922002A9FAB /* PreviewPhotoContainerView.swift */,
 			);
 			name = Camera;
 			sourceTree = "<group>";
@@ -166,10 +171,10 @@
 				D3BFF7521F06631300752AEE /* UserProfile */,
 				D3A122881F05FC980086E01C /* Utilis */,
 				D3A122761F05FBD10086E01C /* AppDelegate.swift */,
+				D35C95CF1F1F106B002A9FAB /* Main.storyboard */,
+				D35C95D11F1F106B002A9FAB /* LaunchScreen.storyboard */,
 				D3BFF74D1F065A1700752AEE /* MainTabBarController.swift */,
-				D3A1227A1F05FBD10086E01C /* Main.storyboard */,
 				D3A1227D1F05FBD20086E01C /* Assets.xcassets */,
-				D3A1227F1F05FBD20086E01C /* LaunchScreen.storyboard */,
 				D34A67D61F05FF23002873EC /* GoogleService-Info.plist */,
 				D3A122821F05FBD20086E01C /* Info.plist */,
 			);
@@ -192,6 +197,7 @@
 				D3BFF7501F065AFB00752AEE /* UserProfileController.swift */,
 				D3BFF7531F06632500752AEE /* UserProfileHeader.swift */,
 				D3913A7A1F0CFF7500249AD8 /* UserProfilePhotoCell.swift */,
+				D35C95C81F1E445B002A9FAB /* UserProfileEditController.swift */,
 			);
 			name = UserProfile;
 			sourceTree = "<group>";
@@ -278,10 +284,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3A122811F05FBD20086E01C /* LaunchScreen.storyboard in Resources */,
+				D35C95D21F1F106B002A9FAB /* Main.storyboard in Resources */,
+				D35C95D31F1F106B002A9FAB /* LaunchScreen.storyboard in Resources */,
 				D34A67D71F05FF23002873EC /* GoogleService-Info.plist in Resources */,
 				D3A1227E1F05FBD20086E01C /* Assets.xcassets in Resources */,
-				D3A1227C1F05FBD10086E01C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +365,8 @@
 				D3A122771F05FBD10086E01C /* AppDelegate.swift in Sources */,
 				D3913A821F0DD96B00249AD8 /* HomePostCell.swift in Sources */,
 				D3913A721F0CAC6D00249AD8 /* PhotoSelectorHeader.swift in Sources */,
+				D35C95C91F1E445B002A9FAB /* UserProfileEditController.swift in Sources */,
+				D35C95CB1F1EF922002A9FAB /* PreviewPhotoContainerView.swift in Sources */,
 				D3E712191F08DA450096FCE1 /* PhotoSelectorController.swift in Sources */,
 				D3913A861F0F135B00249AD8 /* FirebaseExtension.swift in Sources */,
 				D3913A801F0DD6A200249AD8 /* HomeController.swift in Sources */,
@@ -368,20 +376,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		D3A1227A1F05FBD10086E01C /* Main.storyboard */ = {
+		D35C95CF1F1F106B002A9FAB /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D3A1227B1F05FBD10086E01C /* Base */,
+				D35C95CE1F1F106B002A9FAB /* Base */,
 			);
 			name = Main.storyboard;
+			path = ../../InstFirebase/InsFire;
 			sourceTree = "<group>";
 		};
-		D3A1227F1F05FBD20086E01C /* LaunchScreen.storyboard */ = {
+		D35C95D11F1F106B002A9FAB /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D3A122801F05FBD20086E01C /* Base */,
+				D35C95D01F1F106B002A9FAB /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = ../../InstFirebase/InsFire;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

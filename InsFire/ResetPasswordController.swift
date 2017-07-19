@@ -81,7 +81,6 @@ class ResetPasswordController: UIViewController, UIImagePickerControllerDelegate
 
     /***********************************************************************/
 
-    
     /* This function checks if the inputs are in the correct formats */
     func handleTextInputChange() {
         if isValidEmail(testStr: emailTextField.text!) {
@@ -136,7 +135,8 @@ class ResetPasswordController: UIViewController, UIImagePickerControllerDelegate
         self.countDownTimer.invalidate()
         self.sendEmailCodeButton.isEnabled = true
         self.sendEmailCodeButton.backgroundColor = UIColor.rgb(red: 17, green: 154, blue: 237)
-        self.sendEmailCodeButton.setTitle("Re-send", for: .normal)
+        self.sendEmailCodeButton.setTitle("Resend", for: .normal)
+        self.sendEmailCodeButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
     }
     /***********************************************************************/
     

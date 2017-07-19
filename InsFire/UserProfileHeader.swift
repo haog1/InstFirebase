@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class UserProfileHeader: UICollectionViewCell {
+class UserProfileHeader: UICollectionViewCell, UIPageViewControllerDelegate {
     
     var user: AppUser? {
         didSet {
@@ -17,7 +17,6 @@ class UserProfileHeader: UICollectionViewCell {
             guard let profileImageUrl = user?.profileImageUrl else { return }
             profileImageView.loadImage(urlString: profileImageUrl)
             usernameLabel.text = user?.username
-            
             setupEditFollowButton()
         }
     }
@@ -72,7 +71,7 @@ class UserProfileHeader: UICollectionViewCell {
                 print("Successfully unfollow user: ", self.user?.username ?? "")
                 self.setupFollowStyle()
             })
-        }else {
+        }else if editProfileFollowButton.titleLabel?.text == "Follow" {
             // unfollow styling
             let ref = Database.database().reference().child("following").child(currLoggedInUserId)
             let values = [userId: 1]
@@ -87,6 +86,8 @@ class UserProfileHeader: UICollectionViewCell {
             self.editProfileFollowButton.setTitle("Unfollow", for: .normal)
             self.editProfileFollowButton.backgroundColor = .white
             self.editProfileFollowButton.setTitleColor(.black, for: .normal)
+        } else{
+            // edit profile
         }
     }
     
@@ -207,7 +208,6 @@ class UserProfileHeader: UICollectionViewCell {
         
         addSubview(editProfileFollowButton)
         editProfileFollowButton.anchor(top: postsLabel.bottomAnchor, left: postsLabel.leftAnchor, bottom: nil, right: followingLabel.rightAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 34)
-        
     }
     
 

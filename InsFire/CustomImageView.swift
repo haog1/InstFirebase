@@ -49,7 +49,6 @@ class CustomImageView: UIImageView {
             DispatchQueue.main.async {
                 self.image = photoImage
             }
-            }.resume()
-        
+            }.resume()   
     }
 }
