@@ -62,7 +62,7 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
         
         settings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewFormatType]
         output.capturePhoto(with: settings, delegate: self)
-        //captureButton.isEnabled = false
+        captureButton.isEnabled = false
         captureButton.isHidden = true
     }
     
@@ -80,7 +80,8 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
         view.addSubview(containerView)
         containerView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         captureButton.isHidden = false
-        
+        captureButton.isEnabled = true
+
 //        let previewImaeView = UIImageView(image: previewImage)
 //        view.addSubview(previewImaeView)
 //        previewImaeView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)

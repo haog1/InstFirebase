@@ -72,7 +72,6 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
                         if self.selectedImage == nil {
                             self.selectedImage = image
                         }
-                        
                     }
                     
                     if count == allPhotos.count - 1 {
