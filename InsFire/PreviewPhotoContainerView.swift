@@ -36,8 +36,8 @@ class PreviewPhotoContainerView: UIView {
     }()
     
     func handleNext() {
-        
-        print("Do next step")
+
+        self.nextButton.isEnabled = false
         
         guard let previewImage = previewImageView.image else { return }
         
@@ -85,13 +85,12 @@ class PreviewPhotoContainerView: UIView {
                     }, completion: { (_) in
                         // remove label frome view
                         savedLabel.removeFromSuperview()
+                        self.removeFromSuperview()
                     })
                 })
-                
-                self.nextButton.isEnabled = false
             }
         }
-        
+
     }
     
     

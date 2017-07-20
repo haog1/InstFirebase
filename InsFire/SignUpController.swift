@@ -65,7 +65,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         let isFormValid = usernameTextField.text?.characters.count ?? 0 > 0
             && !areEqualImages(img1: #imageLiteral(resourceName: "plus_photo"), img2: plusPhotoButton.currentImage!)
             && isValidEmail(testStr: emailTextField.text!)
-            && isPasswordValid(passwordTextField.text!)
+            && isPasswordValid1(passwordTextField.text!)
         
         if isFormValid {
             signUpButton.isEnabled = true

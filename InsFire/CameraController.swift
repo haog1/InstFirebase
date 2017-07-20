@@ -36,11 +36,7 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate, UIViewC
     func handleDismiss() {
         dismiss(animated: true, completion: nil)
     }
-    
-    func handleSwitchCamera() {
-        print("Switch to front camera.")
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,7 +47,6 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate, UIViewC
         setupCaptureButtons()
     }
     
-
     // present camera
     let  customAnimationPresenter = CustomAnimationPresenter()
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -69,7 +64,6 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate, UIViewC
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
     
     fileprivate func setupCaptureButtons() {
         view.addSubview(captureButton)
@@ -108,38 +102,52 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate, UIViewC
         
         view.addSubview(containerView)
         containerView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+       
         captureButton.isHidden = false
         captureButton.isEnabled = true
 
-//        let previewImaeView = UIImageView(image: previewImage)
-//        view.addSubview(previewImaeView)
-//        previewImaeView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-//        
-//        print("finish processing photo sample buffer")
+    }
+
+    // set up camera
+    let output = AVCapturePhotoOutput()
+    let captureSession = AVCaptureSession()
+
+    // handle switching cameras
+    func handleSwitchCamera() {
+        
+        captureSession.beginConfiguration()
+        let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput
+        captureSession.removeInput(currentInput)
+        
+        let newCameraDevice = currentInput?.device.position == .back ? getCamera(with: .front) : getCamera(with: .back)
+        let newVideoInput = try? AVCaptureDeviceInput(device: newCameraDevice)
+        captureSession.addInput(newVideoInput)
+        captureSession.commitConfiguration()
         
     }
-    
 
-    let output = AVCapturePhotoOutput()
-
-    fileprivate func setupCaptureSession() {
-
-        let captureSession = AVCaptureSession()
-
+    fileprivate func getCamera(with position: AVCaptureDevicePosition) -> AVCaptureDevice? {
+        guard let devices = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo) as? [AVCaptureDevice] else { return nil }
         
-        // 1. setup input
+        return devices.filter { $0.position == position }.first
+    }
+
+    func setupCaptureSession() {
+
         let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
         
         do{
             let input = try AVCaptureDeviceInput(device: captureDevice)
+
             if captureSession.canAddInput(input) {
                 captureSession.addInput(input)
+                print(captureSession)
             }
-
+            
         } catch let err {
             print("Could not setup camera input: ", err)
         }
-
+        
         // 2. setup output
         if captureSession.canAddOutput(output) {
             captureSession.addOutput(output)
@@ -147,7 +155,7 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate, UIViewC
         
         // 3. setup output preview
         guard let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession) else { return }
-
+        
         previewLayer.frame = view.frame
         view.layer.addSublayer(previewLayer)
         

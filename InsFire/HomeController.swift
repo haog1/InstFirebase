@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 
-class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout, HomePostCellDelegate {
     
     let cellId = "cellId"
     var posts = [Post]()
@@ -35,15 +35,15 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         setupNavigationItems()
         fetchAllPosts()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        tap.numberOfTapsRequired = 2
-        view.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+//        tap.numberOfTapsRequired = 2
+//        view.addGestureRecognizer(tap)
         
     }
     
-    func handleTap() {
-        print("123...")
-    }
+//    func handleTap() {
+//
+//    }
     
     func handleUpdateFeed() {
         handleRefresh()
@@ -54,7 +54,9 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         // handle unfollowing user refresh
         posts.removeAll()
+        
         fetchAllPosts()
+        
         DispatchQueue.global(qos: .background).async {
             self.collectionView?.reloadData()
             self.collectionView?.refreshControl?.endRefreshing()
@@ -72,7 +74,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         // get the list of following users
         guard let uid = Auth.auth().currentUser?.uid else { return }
         Database.database().reference().child("following").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-          
+            
             guard let userIdDict = snapshot.value as? [String: Any] else { return }
             
             userIdDict.forEach({ (key, value) in
@@ -80,7 +82,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
                     self.fetchPostsWithUser(user: user)
                 })
             })
-
+            
         }) { (err) in
             print("Failed to fetch following user ids: ", err)
         }
@@ -97,7 +99,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func handleCamera() {
         
         let cameraController = CameraController() // construct an Camera-shooting object from custom class
-  
+        
         present(cameraController, animated: true, completion: nil) // show it when the icon is pressed
     }
     
@@ -114,18 +116,32 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        print("Posts: ",posts.count)
         return posts.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomePostCell
+        
         cell.post = posts[indexPath.item]
+        
+        cell.delegate = self
+        
         return cell
     }
-    
-    //ios
-    // let refreshControl = UIRefreshControl()
+
+    /*
+        Custom Delegation Protocol Function Implementation
+     */
+    func didTapComment(post: Post) {
+        
+        print(post.caption)
+        
+        let commentsController = CommentsController(collectionViewLayout:UICollectionViewFlowLayout())
+        
+        navigationController?.pushViewController(commentsController, animated: true)
+    }
     
     
     fileprivate func fetchPost() {
