@@ -13,6 +13,7 @@ import Firebase
 // Custom Delegation Function Defintion
 protocol HomePostCellDelegate {
     func didTapComment(post: Post)
+    func didLike(for cell: HomePostCell)
 }
 
 class HomePostCell: UICollectionViewCell {
@@ -23,6 +24,7 @@ class HomePostCell: UICollectionViewCell {
         didSet {
             guard let postImageUrl = post?.imageUrl else { return }
             
+            likeButton.setImage(post?.hasLiked == true ? #imageLiteral(resourceName: "like_selected").withRenderingMode(.alwaysOriginal) : #imageLiteral(resourceName: "like_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
             photoImageView.loadImage(urlString: postImageUrl)
             
             usernameLabel.text = "TEST USERNAME"
@@ -83,11 +85,16 @@ class HomePostCell: UICollectionViewCell {
         return button
     }()
     
-    let likeButton: UIButton = {
+    lazy var likeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "like_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
         return button
     }()
+    
+    func handleLike() {
+        delegate?.didLike(for:  self)
+    }
     
     // change let to lazy var, so tagret action will be executed
     lazy var commentButton: UIButton = {
@@ -117,7 +124,7 @@ class HomePostCell: UICollectionViewCell {
     
     // the target function that calls the delegation function
     func handleComment() {
-        print("commenting...")
+        //print("commenting...")
         guard let post = post else { return }
         delegate?.didTapComment(post: post)
     }
