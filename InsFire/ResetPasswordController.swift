@@ -51,7 +51,7 @@ class ResetPasswordController: UIViewController, UIImagePickerControllerDelegate
     let sendEmailCodeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Send", for: .normal)
-        button.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
+        button.backgroundColor = .inActiveColor()
         
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
@@ -67,7 +67,7 @@ class ResetPasswordController: UIViewController, UIImagePickerControllerDelegate
     let resetButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Reset Password", for: .normal)
-        button.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
+        button.backgroundColor = .inActiveColor()
         
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
@@ -85,18 +85,18 @@ class ResetPasswordController: UIViewController, UIImagePickerControllerDelegate
     func handleTextInputChange() {
         if isValidEmail(testStr: emailTextField.text!) {
             sendEmailCodeButton.isEnabled = true
-            sendEmailCodeButton.backgroundColor = UIColor.rgb(red: 17, green: 154, blue: 237)
+            sendEmailCodeButton.backgroundColor = .activeColor()
             
             if isPasswordValid(passwordTextField.text!) {
                 resetButton.isEnabled = true
-                resetButton.backgroundColor = UIColor.rgb(red: 17, green: 154, blue: 237)
+                resetButton.backgroundColor = .activeColor()
             }else {
                 resetButton.isEnabled = false
-                resetButton.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
+                resetButton.backgroundColor = .inActiveColor()
             }
         } else {
             sendEmailCodeButton.isEnabled = false
-            sendEmailCodeButton.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
+            sendEmailCodeButton.backgroundColor = .inActiveColor()
         }
         
     }
@@ -105,7 +105,7 @@ class ResetPasswordController: UIViewController, UIImagePickerControllerDelegate
         
         // start a timer
         self.sendEmailCodeButton.isEnabled = false
-        self.sendEmailCodeButton.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
+        self.sendEmailCodeButton.backgroundColor = .inActiveColor()
         self.startTimer()
         
     }
@@ -134,7 +134,7 @@ class ResetPasswordController: UIViewController, UIImagePickerControllerDelegate
         totalTime = 59
         self.countDownTimer.invalidate()
         self.sendEmailCodeButton.isEnabled = true
-        self.sendEmailCodeButton.backgroundColor = UIColor.rgb(red: 17, green: 154, blue: 237)
+        self.sendEmailCodeButton.backgroundColor = .activeColor()
         self.sendEmailCodeButton.setTitle("Resend", for: .normal)
         self.sendEmailCodeButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
     }
@@ -150,7 +150,7 @@ class ResetPasswordController: UIViewController, UIImagePickerControllerDelegate
         
         let attributedTitle = NSMutableAttributedString(string: "Already have an account?  ", attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName:UIColor.lightGray])
         
-        attributedTitle.append(NSAttributedString(string: "Log In", attributes: [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 14),NSForegroundColorAttributeName:UIColor.rgb(red: 17, green: 154, blue: 237)]))
+        attributedTitle.append(NSAttributedString(string: "Log In", attributes: [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 14),NSForegroundColorAttributeName:UIColor.activeColor()]))
         
         button.setAttributedTitle(attributedTitle, for: .normal)
         

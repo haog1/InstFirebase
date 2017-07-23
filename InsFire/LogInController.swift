@@ -53,10 +53,10 @@ class LogInController: UIViewController {
         
         if isPasswordValid1(passwordTextField.text!) && isValidEmail(testStr: emailTextField.text!) {
             loginButton.isEnabled = true
-            loginButton.backgroundColor = UIColor.rgb(red: 17, green: 154, blue: 237)
+            loginButton.backgroundColor = .activeColor()
         } else {
             loginButton.isEnabled = false
-            loginButton.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
+            loginButton.backgroundColor = .inActiveColor()
         }
     }
     
@@ -64,7 +64,7 @@ class LogInController: UIViewController {
     let loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Log In", for: .normal)
-        button.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
+        button.backgroundColor = .inActiveColor()
         
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
@@ -112,7 +112,7 @@ class LogInController: UIViewController {
         
         let attributedTitle = NSMutableAttributedString(string: "forgot your password?  ", attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName:UIColor.lightGray])
         
-        attributedTitle.append(NSAttributedString(string: "Reset Password", attributes: [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 14),NSForegroundColorAttributeName:UIColor.rgb(red: 17, green: 154, blue: 237)]))
+        attributedTitle.append(NSAttributedString(string: "Reset Password", attributes: [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 14),NSForegroundColorAttributeName: UIColor.activeColor()]))
         
         button.setAttributedTitle(attributedTitle, for: .normal)
         
@@ -131,7 +131,7 @@ class LogInController: UIViewController {
         
         let attributedTitle = NSMutableAttributedString(string: "Don't have an account?  ", attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName:UIColor.lightGray])
         
-        attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 14),NSForegroundColorAttributeName:UIColor.rgb(red: 17, green: 154, blue: 237)]))
+        attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 14),NSForegroundColorAttributeName: UIColor.activeColor()]))
         
         button.setAttributedTitle(attributedTitle, for: .normal)
         

@@ -9,14 +9,45 @@
 import UIKit
 import Firebase
 
-
-class UserProfileController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class UserProfileController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UserProfileHeaderDelegate {
     
+    let homePostCellId = "homePostCellId"
     let cellId = "cellId"
+    
     // fetching data from Firebase DB
     var posts = [Post]()
     var user: AppUser?
     var userId: String?
+    
+    // user profile header switcher
+    var isGridView = true
+    var isListView = false
+    var isBookmark = false
+    
+    func didChangeToListView() {
+        isGridView = false
+        isListView = true
+        isBookmark = false
+        collectionView?.reloadData()
+    }
+    
+    func didChangeToGridView() {
+        isGridView = true
+        isListView = false
+        isBookmark = false
+        collectionView?.reloadData()
+    }
+    
+    func didChangeToBookmarkView() {
+        isBookmark = true
+        isGridView = false
+        isListView = false
+        collectionView?.reloadData()
+    }
+    
+    func didChangeToEditProfile() {
+        print("editing profile from controller")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +63,8 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerId")
         
         collectionView?.register(UserProfilePhotoCell.self, forCellWithReuseIdentifier: cellId)
-                
+        
+        collectionView?.register(HomePostCell.self, forCellWithReuseIdentifier: homePostCellId)
         setupLogoutButton()
     }
     
@@ -99,11 +131,18 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserProfilePhotoCell
-        
-        cell.post = posts[indexPath.item]
-        
-        return cell
+        if isListView{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: homePostCellId, for: indexPath) as! HomePostCell
+            cell.post = posts[indexPath.item]
+            return cell
+
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserProfilePhotoCell
+            
+            cell.post = posts[indexPath.item]
+            return cell
+
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -115,14 +154,23 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (view.frame.width - 2) / 3
-        return CGSize(width: width, height: width)
+        if isListView || isBookmark {
+            var height: CGFloat = 40 + 8 + 8 // username userporiflleimageview
+            height += view.frame.width
+            height += 50 // for buttons below the image cell
+            height += 80 // for caption text belows than the buttons
+            return CGSize(width: view.frame.width, height: height)
+        }else {
+            let width = (view.frame.width - 2) / 3
+            return CGSize(width: width, height: width)
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerId", for: indexPath) as! UserProfileHeader
         
         header.user = self.user
+        header.delegate = self // register custom delegate for UserProfileHeader here
         
         return header
     }

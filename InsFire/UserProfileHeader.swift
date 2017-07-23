@@ -9,7 +9,16 @@
 import UIKit
 import Firebase
 
+protocol UserProfileHeaderDelegate {
+    func didChangeToListView()
+    func didChangeToGridView()
+    func didChangeToBookmarkView()
+    func didChangeToEditProfile()
+}
+
 class UserProfileHeader: UICollectionViewCell, UIPageViewControllerDelegate {
+    
+    var delegate: UserProfileHeaderDelegate?
     
     var user: AppUser? {
         didSet {
@@ -21,15 +30,15 @@ class UserProfileHeader: UICollectionViewCell, UIPageViewControllerDelegate {
         }
     }
     
-    
     fileprivate func setupEditFollowButton() {
         
         guard let currLoggdInUser = Auth.auth().currentUser?.uid else { return }
         guard let userId = user?.uid else { return }
         
         if currLoggdInUser == userId {
-            // edit profile
+
             editProfileFollowButton.setTitle("Edit Profile", for: .normal)
+
         } else {
             
             //check if already followed
@@ -48,6 +57,25 @@ class UserProfileHeader: UICollectionViewCell, UIPageViewControllerDelegate {
         }
     }
     
+    lazy var editProfileFollowButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.layer.borderColor = UIColor.lightGray.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(handleEditProfileOrFollow), for: .touchUpInside)
+        return button
+    }()
+
+    
+    fileprivate func setupFollowStyle() {
+        self.editProfileFollowButton.setTitle("Follow", for: .normal)
+        self.editProfileFollowButton.backgroundColor = .activeColor()
+        self.editProfileFollowButton.setTitleColor(.white, for: .normal)
+        self.editProfileFollowButton.layer.borderColor = UIColor(white: 0, alpha: 0.2).cgColor
+    }
     
     /*
      This function creates another node in database which is Follow folder.
@@ -58,7 +86,6 @@ class UserProfileHeader: UICollectionViewCell, UIPageViewControllerDelegate {
         // create a new node
         guard let currLoggedInUserId = Auth.auth().currentUser?.uid else { return }
         guard let userId = user?.uid  else { return }
-        
         
         if editProfileFollowButton.titleLabel?.text == "Unfollow" {
             // follow stytling
@@ -87,42 +114,61 @@ class UserProfileHeader: UICollectionViewCell, UIPageViewControllerDelegate {
             self.editProfileFollowButton.backgroundColor = .white
             self.editProfileFollowButton.setTitleColor(.black, for: .normal)
         } else{
-            // edit profile
+            print("editing profile")
+            delegate?.didChangeToEditProfile()
         }
     }
     
-    fileprivate func setupFollowStyle() {
-        self.editProfileFollowButton.setTitle("Follow", for: .normal)
-        self.editProfileFollowButton.backgroundColor = UIColor.rgb(red: 17, green: 154, blue: 237)
-        self.editProfileFollowButton.setTitleColor(.white, for: .normal)
-        self.editProfileFollowButton.layer.borderColor = UIColor(white: 0, alpha: 0.2).cgColor
-    }
-    
+
     // the profile image showing on profile page
     let profileImageView: CustomImageView = {
         let iv = CustomImageView()
         return iv
     }()
     
-    let gridButton: UIButton = {
+    lazy var gridButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "grid").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "grid"), for: .normal)
+        button.addTarget(self, action: #selector(handleChangeToGridView), for: .touchUpInside)
         return button
     }()
     
-    let listButton: UIButton = {
+    func handleChangeToGridView() {
+        listButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        bookmarkButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        gridButton.tintColor = .activeColor()
+        delegate?.didChangeToGridView()
+    }
+    
+    lazy var listButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "list").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "list"), for: .normal)
         button.tintColor = UIColor(white: 0, alpha: 0.2)
+        button.addTarget(self, action: #selector(handleChangeToListView), for: .touchUpInside)
         return button
     }()
     
-    let bookmarkButton: UIButton = {
+    func handleChangeToListView() {
+        listButton.tintColor = .activeColor()
+        gridButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        bookmarkButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        delegate?.didChangeToListView()
+    }
+    
+    lazy var bookmarkButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "ribbon").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.tintColor = UIColor(white: 0, alpha: 0.4)
+        button.setImage(#imageLiteral(resourceName: "ribbon"), for: .normal)
+        button.tintColor = UIColor(white: 0, alpha: 0.2)
+        button.addTarget(self, action: #selector(handleChangeToBookmarkView), for: .touchUpInside)
         return button
     }()
+    
+    func handleChangeToBookmarkView() {
+        listButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        gridButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        bookmarkButton.tintColor = .activeColor()
+        delegate?.didChangeToBookmarkView()
+    }
     
     let usernameLabel: UILabel = {
         let label = UILabel()
@@ -173,19 +219,6 @@ class UserProfileHeader: UICollectionViewCell, UIPageViewControllerDelegate {
         return label
     }()
     
-    lazy var editProfileFollowButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 5
-        button.addTarget(self, action: #selector(handleEditProfileOrFollow), for: .touchUpInside)
-        return button
-    }()
-    
-    
     /*
      
      initialise the profile header section
@@ -224,10 +257,8 @@ class UserProfileHeader: UICollectionViewCell, UIPageViewControllerDelegate {
         
         let topDividerView = UIView()
         topDividerView.backgroundColor = UIColor.lightGray
-
         let bottomDividerView = UIView()
         bottomDividerView.backgroundColor = UIColor.lightGray
-        
         let stackView = UIStackView(arrangedSubviews: [gridButton,listButton, bookmarkButton])
         
         stackView.axis = .horizontal
@@ -242,8 +273,8 @@ class UserProfileHeader: UICollectionViewCell, UIPageViewControllerDelegate {
         topDividerView.anchor(top: stackView.topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
 
         bottomDividerView.anchor(top: stackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
-    }
 
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
