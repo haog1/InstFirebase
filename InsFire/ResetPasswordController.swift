@@ -142,6 +142,9 @@ class ResetPasswordController: UIViewController, UIImagePickerControllerDelegate
     
     func handleReset() {
         
+        
+        
+        
     }
 
     

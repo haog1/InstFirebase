@@ -62,10 +62,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     func handleTextInputChange() {
         
-        let isFormValid = usernameTextField.text?.characters.count ?? 0 > 0
-            && !areEqualImages(img1: #imageLiteral(resourceName: "plus_photo"), img2: plusPhotoButton.currentImage!)
-            && isValidEmail(testStr: emailTextField.text!)
-            && isPasswordValid1(passwordTextField.text!)
+        let isFormValid = !areEqualImages(img1: #imageLiteral(resourceName: "plus_photo"), img2: plusPhotoButton.currentImage!) && isValidEmail(testStr: emailTextField.text!) && isPasswordValid1(passwordTextField.text!) && isUsernameValid(username: usernameTextField.text!)
         
         if isFormValid {
             signUpButton.isEnabled = true
@@ -121,6 +118,10 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     */
 
     func handleSignUp() {
+        
+        self.view.isUserInteractionEnabled = false
+        self.signUpButton.backgroundColor = .inActiveColor()
+        
         guard let email = emailTextField.text, email.characters.count > 0 else { return }
         guard let username = usernameTextField.text, username.characters.count > 0 else { return }
         guard let password = passwordTextField.text, password.characters.count > 0 else { return }
@@ -128,7 +129,26 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         Auth.auth().createUser(withEmail: email, password: password, completion: { (user: User?, error: Error?) in
             
             if let err = error {
-                print("Failed to create user:", err)
+                
+                print(err.localizedDescription)
+                self.signUpButton.isEnabled = false
+                self.signUpButton.backgroundColor = .inActiveColor()
+                self.view.isUserInteractionEnabled = true
+                
+//                if err.localizedDescription == "The password must be 6 characters long or more."{
+//                self.showInputWarning(textInput: "The password must be 6 characters long or more", width: 200, height: 80)
+//                } else if err.localizedDescription == "The email address is already in use by another account." {
+//                self.showInputWarning(textInput: "The email address is already in use by another account.", width: 200, height: 80)
+//                }else {
+//                    self.showInputWarning(textInput: "wrong input information", width: 100, height: 80)
+//                }
+
+                self.showInputWarning(textInput: err.localizedDescription, width: 200, height: 100)
+                
+                self.passwordTextField.text = ""
+                self.usernameTextField.text = ""
+                self.emailTextField.text = ""
+                
                 return
             }
             

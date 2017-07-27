@@ -138,7 +138,6 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
     // this calls the container
     override var inputAccessoryView: UIView? {
         get {
-            self.hideKeyboardWhenTappedAround()
             return containerView
         }
     }
@@ -146,28 +145,48 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
     let commentTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter omment"
+        textField.addTarget(nil, action:Selector(("firstResponderAction:")), for:.editingDidEndOnExit)
         return textField
     }()
     
     func handleSubmit() {
-        print("Submitting comments: ", self.post?.id ?? "")
-        
-        let postId = self.post?.id ?? ""
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        let values = ["text": commentTextField.text ?? "", "creationDate": Date().timeIntervalSince1970, "uid": uid] as [String: Any]
-        
-        Database.database().reference().child("comments").child(postId).childByAutoId().updateChildValues(values) { (err, ref) in
-            
-            if let err = err {
-                print("Failed upload comments into DB: ", err)
-            }
 
-            print("Successfully insert comments into DB")
+        self.view.isUserInteractionEnabled = false
+        
+        if checkIfValidComment(comment: commentTextField.text!) {
+            print("Submitting comments: ", self.post?.id ?? "")
+            
+            let postId = self.post?.id ?? ""
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            
+            let values = ["text": commentTextField.text ?? "", "creationDate": Date().timeIntervalSince1970, "uid": uid] as [String: Any]
+            
+            // hide keyboard, scroll to bottom and clear input accessory
+            self.commentTextField.text = ""
+            self.dismisskeyboard()
+            
+            let scrollView = UIScrollView()
+            scrollView.scrollToBottom()
+            
+            Database.database().reference().child("comments").child(postId).childByAutoId().updateChildValues(values) { (err, ref) in
+                
+                if let err = err {
+                    print(err.localizedDescription)
+                    self.showInputWarning(textInput: err.localizedDescription, width: 200, height: 80)
+                    return
+                }
+                
+                print("Successfully insert comments into DB")
+            }
+        }else {
+            self.showInputWarning(textInput: "Comment cannot be empty", width: 200, height: 80)
             
         }
-        
-        
+        self.view.isUserInteractionEnabled = true
+    }
+    
+    private func checkIfValidComment(comment: String) -> Bool {
+        return true
     }
     
     override var canBecomeFirstResponder: Bool {

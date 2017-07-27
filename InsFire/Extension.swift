@@ -69,19 +69,40 @@ extension UIViewController {
         // print("validate calendar: \(testStr)")
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        
         return emailTest.evaluate(with: testStr)
     }
     
-    func isPasswordValid(_ password : String) -> Bool{
+    func isPasswordValid(_ password : String) -> Bool {
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
         return passwordTest.evaluate(with: password)
     }
     
+    func isUsernameValid(username: String) -> Bool {
+        var isAllBlank = false
+        if username.characters.count > 2 {
+            for char in username.characters {
+                if char == " " {
+                    isAllBlank = true
+                    break
+                }
+            }
+        } else {
+            return false
+        }
+        
+        if isAllBlank {
+            return false
+        }else {
+            return true
+        }
+    }
+    
     func isPasswordValid1(_ password : String) -> Bool{
-        //let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
-        //return passwordTest.evaluate(with: password)
-        return true
+        if password.characters.count > 1 {
+            return true
+        }else {
+            return false
+        }
     }
     
     func areEqualImages(img1: UIImage, img2: UIImage) -> Bool {
@@ -90,6 +111,41 @@ extension UIViewController {
         guard let data2 = UIImagePNGRepresentation(img2) else { return false }
         
         return data1 == data2
+    }
+    
+    
+    func showInputWarning(textInput: String, width: CGFloat, height: CGFloat) {
+        
+        DispatchQueue.main.async {
+            let label = UILabel()
+            label.text = textInput
+            label.font = UIFont.boldSystemFont(ofSize: 15)
+            label.textColor = .white
+            label.numberOfLines = 0
+            label.backgroundColor = UIColor(white: 0, alpha: 0.3)
+            label.textAlignment = .center
+            label.frame = CGRect(x: 0, y: 0, width: width, height: height)
+
+            self.view.addSubview(label)
+            label.layer.transform = CATransform3DMakeScale(0, 0, 0)
+            self.view.bringSubview(toFront: label)
+            label.center = self.view.center
+            
+            // fade in
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+                label.layer.transform = CATransform3DMakeScale(1, 1, 1)
+            }, completion: { (completed) in
+                
+                // fade out
+                UIView.animate(withDuration: 0.5, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+                    
+                    label.layer.transform = CATransform3DMakeScale(0.1, 0.1, 0.1)
+                    label.alpha = 0
+                }, completion: { (_) in
+                    label.removeFromSuperview()
+                })
+            })
+        }
     }
     
 }
@@ -131,6 +187,14 @@ extension Date {
         return "\(quotient) \(unit)\(quotient == 1 ? "" : "s") ago"
     }
         
+}
+
+extension UIScrollView {
+    
+    func scrollToBottom() {
+        let bottomOffset = CGPoint(x: 0, y: contentSize.height - bounds.size.height + contentInset.bottom)
+        setContentOffset(bottomOffset, animated: true)
+    }
 }
 
 

@@ -48,9 +48,9 @@ class LogInController: UIViewController {
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
     }()
-    
+
     func handleTextInputChange() {
-        
+
         if isPasswordValid1(passwordTextField.text!) && isValidEmail(testStr: emailTextField.text!) {
             loginButton.isEnabled = true
             loginButton.backgroundColor = .activeColor()
@@ -84,17 +84,27 @@ class LogInController: UIViewController {
      */
 
     func handleLogin() {
-        
+
+        self.view.isUserInteractionEnabled = false
+
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         
         Auth.auth().signIn(withEmail: email, password: password) { (user, err) in
             if let err = err{
-                print("Failed to Sign In: ", err)
+
+                print(err.localizedDescription)
+                self.passwordTextField.text = ""
+                self.loginButton.isEnabled = false
+                self.loginButton.backgroundColor = .inActiveColor()
+                self.view.isUserInteractionEnabled = true
+
+                self.showInputWarning(textInput: "Username or Password is incorrect!", width: 200, height: 80)
+                
                 return
             }
             
-            // if sign in check successfully: 
+            // if sign in check successfully:
             print("Successfully signed in: ", user?.uid ?? "")
             
             // reset UI when anthoer user login
@@ -157,14 +167,14 @@ class LogInController: UIViewController {
         super.viewDidLoad()
         
         self.hideKeyboardWhenTappedAround()
-        
+
         view.addSubview(logoContainerView)
         logoContainerView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 150)
         
         navigationController?.isNavigationBarHidden = true
         
         view.backgroundColor = .white
-
+        
         view.addSubview(forgotPasswordButton)
         view.addSubview(dontHaveAccountButton)
         
